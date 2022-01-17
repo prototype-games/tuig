@@ -31,3 +31,4 @@ A cue is translated into lines when executed. Cues can be used to set the line-c
 4. prototyping stuff like animations
 5. props
 6. Actor address book kinda feature.
+7. keyframed lines
