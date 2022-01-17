@@ -8,44 +8,44 @@ function a()
 			end
 		end
 		if love.keyboard.isDown( "w" ) then
-			if not wasd.w then
+			if not self.wasd.w then
 				print("W")
 				scene_collection.emit(CUE_STORAGE.move_relative_cue(scene, nil, 0,-50))
 			end
-			wasd.w=true
+			 self.wasd.w=true
 		else
-			wasd.w = nil
+			 self.wasd.w = nil
 		end
 		if love.keyboard.isDown( "a" ) then
-			if not wasd.a then
+			if not  self.wasd.a then
 				print("A")
 				scene_collection.emit(CUE_STORAGE.move_relative_cue(scene, nil, -50,0))
 			end
-			wasd.a = true
+			 self.wasd.a = true
 		else
-			wasd.a = nil
+			 self.wasd.a = nil
 		end
 		if love.keyboard.isDown( "s" ) then
-			if not wasd.s then
+			if not  self.wasd.s then
 				print("S")
 				scene_collection.emit(CUE_STORAGE.move_relative_cue(scene, nil, 0,50))
 			end
-			wasd.s= true
+			 self.wasd.s= true
 		else
-			wasd.s = nil
+			 self.wasd.s = nil
 		end
 		if love.keyboard.isDown( "d" ) then
-			if not wasd.d then
+			if not  self.wasd.d then
 				print("D")
 				scene_collection.emit(CUE_STORAGE.move_relative_cue(scene, nil, 50,0))
 			end
-			wasd.d = true
+			 self.wasd.d = true
 		else
-			wasd.d = nil
+			 self.wasd.d = nil
 		end
 	end
 	function dir:init(scene)
-		local res = {name=dir.name}
+		local res = {name=dir.name, wasd={}}
 		return res
 	end
 	return dir

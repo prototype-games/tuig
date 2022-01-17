@@ -47,15 +47,9 @@ function love.load()
 
 
 	ll["current_line"] = 1
-	bitser.dumpLoveFile("savepoint.dat", a.SCENES)
+	-- bitser.dumpLoveFile("savepoint.dat", a.SCENES)
+	a.SCENES = bitser.loadLoveFile("savepoint.dat")
 
-	print("HOI")
-	bitser.loadLoveFile("savepoint.dat", a.SCENES)
-	for _,scenes in pairs(a.SCENES ) do
-		for k, _ in pairs(scenes.objects) do
-			k.scene_collection = a
-		end
-	end
 end
 
 function love.update(dt)
@@ -93,6 +87,8 @@ function love.update(dt)
 			end
 		end
 	end
+		-- bitser.dumpLoveFile("savepoint.dat", a.SCENES)
+
 end	
 
 
