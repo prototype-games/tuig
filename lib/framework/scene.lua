@@ -1,9 +1,8 @@
 local directors = require "lib.framework.directors"
 local scene_collection = function()
 	function new_scene(obj,scene_name)
-		local scene = {name=scene_name, objects={}, roles={}, lines={}, directors=directors.init()}
+		local scene = {name=scene_name, objects={}, roles={}, lines={}, directors={}}
 		obj.SCENES[scene_name] = scene
-		scene.scene_collection = obj
 		scene.pipeline = {}
 		return scene
 	end
@@ -48,10 +47,13 @@ local scene_collection = function()
 		end
 		add_obj(scene, scene_name, obj)
 	end
+	function add_director(scenes, scene, director)
+		scenes.SCENES[scene].directors[director.name] = director.init()
+	end
 	function get_current_scene(obj)
 		return obj.SCENES[obj.current_scene]
 	end
-	local o =  {new_scene=new_scene, get_scene=get_scene, add_object=add_obj, SCENES={}, emit=emit, current_scene="NOROOM", get_current_scene=get_current_scene, move_object_to_scene=move_object_to_scene}
+	local o =  {new_scene=new_scene, get_scene=get_scene, add_object=add_obj, SCENES={}, emit=emit, current_scene="NOROOM", get_current_scene=get_current_scene, move_object_to_scene=move_object_to_scene, add_director=add_director}
 	o:new_scene("NOROOM")
 
 	return o

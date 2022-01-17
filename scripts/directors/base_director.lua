@@ -1,6 +1,6 @@
-local dir = {}
+local dir = {name="base"}
 
-function dir:update(dt, scene)
+function dir:update(dt, scene, scene_collection)
 
 end
 

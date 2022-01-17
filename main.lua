@@ -1,6 +1,7 @@
 local directors = require "lib.framework.directors"
 local scene_collection = require "lib.framework.scene"
 local objs = require "lib.framework.object"
+local bitser = require 'lib.bitser'
 CUE_STORAGE = {add= function(name, constructor, handler)
 	CUE_STORAGE[name] = constructor
 	CUE_HANDLERS[name] = handler
@@ -10,6 +11,7 @@ CUE_HANDLERS = {}
 LINE_HANDLERS = {add=function(name, start, update, draw)
 	LINE_HANDLERS[name]={start=start,update=update, draw=draw}
 end}
+DIRECTORS = {}
 require 'lib.load_all_scripts'
 
 local a = scene_collection()
@@ -17,7 +19,10 @@ local a = scene_collection()
 function love.load()
 	a:new_scene("room")
 	-- a.current_scene = "room"
-	a.SCENES["NOROOM"].directors:add_director(scripts.directors.wasd_director:init(a.SCENES["NOROOM"]))
+	a:add_director("NOROOM",scripts.directors.wasd_director)
+	for _,director in pairs(scripts.directors) do
+		DIRECTORS[director.name] = director
+	end
 	local obj2 = objs.get_test_object()
 	a:add_object("room", obj2)
 	obj2.x = 400
@@ -42,12 +47,21 @@ function love.load()
 
 
 	ll["current_line"] = 1
+	bitser.dumpLoveFile("savepoint.dat", a.SCENES)
+
+	print("HOI")
+	bitser.loadLoveFile("savepoint.dat", a.SCENES)
+	for _,scenes in pairs(a.SCENES ) do
+		for k, _ in pairs(scenes.objects) do
+			k.scene_collection = a
+		end
+	end
 end
 
 function love.update(dt)
 	-- print(dt)
-	for k,v in pairs(a:get_current_scene().directors.directors)do
-		v:update(dt)
+	for k,v in pairs(a:get_current_scene().directors)do
+		DIRECTORS[k].update(v, dt, a:get_current_scene(), a)
 	end
 
 	--k=object, v=lines

@@ -1,6 +1,4 @@
 
-
-
 CUE_STORAGE.add("move_relative_cue",
 	function(scene, object, x, y)
 		return {scene=scene, object=object,x=x, y=y, name="move_relative_cue"}
