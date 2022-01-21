@@ -9,6 +9,7 @@ CUE_STORAGE = {add= function(name, constructor, handler)
 	CUE_HANDLERS[name] = handler
 end,
 run= function(name, ...)
+	print(name)
 			local var = CUE_STORAGE[name](...)
 
 			var.name = name
@@ -77,7 +78,6 @@ function love.update(dt)
 			for i,z in ipairs(v) do
 				if v.current_line  == i then
 					-- todo: update to remove finished function and instead have the update function return remaining time
-					print(v[v.current_line].name)
 					my_time = LINE_HANDLERS[v[v.current_line].name].update(z, dt, k, v)
 					acted=true					
 					if my_time > 0 then

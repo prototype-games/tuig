@@ -13,13 +13,12 @@ local scene_collection = function()
 				for k,v in ipairs(scene.pipeline) do
 					cue = v(cue, obj, scene)
 				end
-				print()
 				CUE_HANDLERS[c.name](scene,obj,c)
 			end
 		end
 	end
-	function emit(c, scene_collection)
-		print("UUU", c)
+	function emit(scene_collection, ...)
+		local c = CUE_STORAGE.run(...)
 		if c.scene then
 			emit_scene(c.scene, c)
 		else
@@ -28,8 +27,11 @@ local scene_collection = function()
 			end
 		end
 	end
+	function emit_here(scene_collection, name, ...)
+		local c = CUE_STORAGE.run(name, scene_collection:get_current_scene(), ...)
+		emit_scene(c.scene, c)
+	end
 	function add_obj(scene, scene_name, object)
-		print(scene_name, object)
 		scene.SCENES[scene_name].objects[object] = object
 		scene.SCENES[scene_name].lines[object] = {current_line=0}
 		scene.SCENES[scene_name].roles[object] = {}
@@ -55,7 +57,7 @@ local scene_collection = function()
 	function get_current_scene(obj)
 		return obj.SCENES[obj.current_scene]
 	end
-	local o =  {new_scene=new_scene, get_scene=get_scene, add_object=add_obj, SCENES={}, emit=emit, current_scene="NOROOM", get_current_scene=get_current_scene, move_object_to_scene=move_object_to_scene, add_director=add_director}
+	local o =  {new_scene=new_scene, get_scene=get_scene, add_object=add_obj, SCENES={}, emit=emit, emit_here=emit_here, current_scene="NOROOM", get_current_scene=get_current_scene, move_object_to_scene=move_object_to_scene, add_director=add_director}
 	o:new_scene("NOROOM")
 
 	return o
