@@ -7,10 +7,11 @@ function a()
 				return
 			end
 		end
+		print(scene)
 		if love.keyboard.isDown( "w" ) then
 			if not self.wasd.w then
 				print("W")
-				scene_collection.emit(CUE_STORAGE.move_relative_cue(scene, nil, 0,-50))
+				scene_collection.emit(CUE_STORAGE.run("move_cues.move_relative_cue", scene, nil, 0,-50),scene_collection)
 			end
 			 self.wasd.w=true
 		else
@@ -19,7 +20,7 @@ function a()
 		if love.keyboard.isDown( "a" ) then
 			if not  self.wasd.a then
 				print("A")
-				scene_collection.emit(CUE_STORAGE.move_relative_cue(scene, nil, -50,0))
+				scene_collection.emit(CUE_STORAGE.run("move_cues.move_relative_cue", scene, nil, -50,0), scene_collection)
 			end
 			 self.wasd.a = true
 		else
@@ -28,7 +29,7 @@ function a()
 		if love.keyboard.isDown( "s" ) then
 			if not  self.wasd.s then
 				print("S")
-				scene_collection.emit(CUE_STORAGE.move_relative_cue(scene, nil, 0,50))
+				scene_collection.emit(CUE_STORAGE.run("move_cues.move_relative_cue", scene, nil, 0,50),scene_collection)
 			end
 			 self.wasd.s= true
 		else
@@ -37,7 +38,7 @@ function a()
 		if love.keyboard.isDown( "d" ) then
 			if not  self.wasd.d then
 				print("D")
-				scene_collection.emit(CUE_STORAGE.move_relative_cue(scene, nil, 50,0))
+				scene_collection.emit(CUE_STORAGE.run("move_cues.move_relative_cue", scene, nil, 50,0),scene_collection)
 			end
 			 self.wasd.d = true
 		else

@@ -7,21 +7,23 @@ local scene_collection = function()
 		return scene
 	end
 	function emit_scene(scene, c)
-		for obj, _ in pairs(c.scene.objects) do
+		for obj, _ in pairs(scene.objects) do
 			if not c.object or c.object == obj then
 				local cue = c
-				for k,v in ipairs(c.scene.pipeline) do
-					cue = v(cue, obj, c.scene)
+				for k,v in ipairs(scene.pipeline) do
+					cue = v(cue, obj, scene)
 				end
-				CUE_HANDLERS[cue.name](c.scene,obj,cue)
+				print()
+				CUE_HANDLERS[c.name](scene,obj,c)
 			end
 		end
 	end
-	function emit(c)
+	function emit(c, scene_collection)
+		print("UUU", c)
 		if c.scene then
 			emit_scene(c.scene, c)
 		else
-			for _,v in pairs(c.scene.scene_collection.SCENES) do
+			for _,v in pairs(scene_collection.SCENES) do
 				emit_scene(v, c)
 			end
 		end

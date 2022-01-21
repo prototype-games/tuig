@@ -2,8 +2,8 @@
 -- scene
 -- actors
 -- params
-CUE_STORAGE.add("set_current_line",
-	function(scene, object, current_line) 
+local frame = {}
+frame["set_current_line"] = {constructor=function(scene, object, current_line) 
 		return {
 			name="set_current_line",
 			scene=scene,
@@ -11,12 +11,13 @@ CUE_STORAGE.add("set_current_line",
 			current_line=current_line
 		}
 	end,
+	handler=
 	function(scene,object,cue)
 		scene.lines[object].current_line=cue.current_line
 	end
-)
-CUE_STORAGE.add("set_lines_by_role",
-function(scene, object, line_name) 
+}
+frame["set_lines_by_role"] = {
+constructor=function(scene, object, line_name) 
 		return {
 			name="set_lines_by_role",
 			scene=scene,
@@ -24,8 +25,7 @@ function(scene, object, line_name)
 			role_name=role_name
 		}
 	end,
-
-	function(scene,object,cue)
+	handler=function(scene,object,cue)
 
 		scene.lines[object] = {}
 		for k,v in ipairs(scene.lines[object].roles[cue.role_name]) do
@@ -34,4 +34,5 @@ function(scene, object, line_name)
 		scene.lines[object].current_line=1
 		
 	end
-	)
+	}
+return frame

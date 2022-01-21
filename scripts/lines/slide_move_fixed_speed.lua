@@ -19,4 +19,4 @@ end
 draw = function(line, object)
 	love.graphics.circle("fill", object.x,object.y, 50)
 end
-LINE_HANDLERS.add("slide_vel", start, update, draw)
+return {start=start, update=update, draw=draw}

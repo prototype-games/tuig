@@ -25,4 +25,4 @@ end
 finish = function(line)
 
 end
-LINE_HANDLERS.add("slide", start, update, draw, finish)
+return {start=start, update=update, draw=draw}

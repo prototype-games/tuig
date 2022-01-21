@@ -2,10 +2,19 @@ local directors = require "lib.framework.directors"
 local scene_collection = require "lib.framework.scene"
 local objs = require "lib.framework.object"
 local bitser = require 'lib.bitser'
+local lines_loader = require"lib.framework.lines"
+local cues_loader = require"lib.framework.cues"
 CUE_STORAGE = {add= function(name, constructor, handler)
 	CUE_STORAGE[name] = constructor
 	CUE_HANDLERS[name] = handler
-end}
+end,
+run= function(name, ...)
+			local var = CUE_STORAGE[name](...)
+
+			var.name = name
+			return var
+	end
+}
 CUE_HANDLERS = {}
 
 LINE_HANDLERS = {add=function(name, start, update, draw)
@@ -24,32 +33,33 @@ function love.load()
 		DIRECTORS[director.name] = director
 	end
 	local obj2 = objs.get_test_object()
+	lines_loader(scripts.lines, "")
+	cues_loader(scripts.cues, "")
 	a:add_object("room", obj2)
 	obj2.x = 400
 	local ll = a:get_scene("room").lines[obj2]
-	ll[#ll+1] = {name="idle", interrupt=true}
+	ll[#ll+1] = {name="base.idle", interrupt=true}
 	ll["current_line"] = 1
 	local obj = objs.get_test_object()
 	a:add_object("room", obj)
 	ll = a:get_scene("room").lines[obj]
-	ll[#ll+1] = {name="slide_vel", x=100, y=100, speed= 120, interrupt=true}
-	LINE_HANDLERS["slide"].start(ll[1])
-	ll[#ll+1] = {name="slide_vel", x=300, y=100, speed= 120, interrupt=true}
-	ll[#ll+1] = {name="slide_vel", x=200, y=600, speed= 120, interrupt=true}
-	ll[#ll+1] = {name="set_counter", counter=2}
+	ll[#ll+1] = {name="slide_move_fixed_speed", x=100, y=100, speed= 120, interrupt=true}
+	LINE_HANDLERS["slide_move_fixed_speed"].start(ll[1])
+	ll[#ll+1] = {name="slide_move_fixed_speed", x=300, y=100, speed= 120, interrupt=true}
+	ll[#ll+1] = {name="slide_move_fixed_speed", x=200, y=600, speed= 120, interrupt=true}
+	ll[#ll+1] = {name="base.set_counter", counter=2}
 	ll["current_line"] = 1
 	a:move_object_to_scene( "NOROOM", obj)
 	ll = a:get_scene("NOROOM").lines[obj]
-	ll[#ll+1] = {name="slide_vel", x=300, y=100, speed= 120, interrupt=true}
-	ll[#ll+1] = {name="slide_vel", x=200, y=600, speed= 120, interrupt=true}
-	ll[#ll+1] = {name="set_counter", counter=4}
-	ll[#ll+1] = {name="idle", interrupt=true}
+	ll[#ll+1] = {name="slide_move_fixed_speed", x=300, y=100, speed= 120, interrupt=true}
+	ll[#ll+1] = {name="slide_move_fixed_speed", x=200, y=600, speed= 120, interrupt=true}
+	ll[#ll+1] = {name="base.set_counter", counter=4}
+	ll[#ll+1] = {name="base.idle", interrupt=true}
 
 
 	ll["current_line"] = 1
 	-- bitser.dumpLoveFile("savepoint.dat", a.SCENES)
-	a.SCENES = bitser.loadLoveFile("savepoint.dat")
-
+	-- a.SCENES = bitser.loadLoveFile("savepoint.dat")
 end
 
 function love.update(dt)
@@ -67,6 +77,7 @@ function love.update(dt)
 			for i,z in ipairs(v) do
 				if v.current_line  == i then
 					-- todo: update to remove finished function and instead have the update function return remaining time
+					print(v[v.current_line].name)
 					my_time = LINE_HANDLERS[v[v.current_line].name].update(z, dt, k, v)
 					acted=true					
 					if my_time > 0 then
