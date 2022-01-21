@@ -72,3 +72,15 @@ print(" GAME LOGIC RESET")
     end
 end
 rl()
+
+function duplicate(obj)
+    print(obj)
+    if type(obj) ~= "table" then
+        return obj
+    end
+    local a = {}
+    for k,v in pairs(obj) do
+        a[k] = duplicate(v)
+    end
+    return a
+end
