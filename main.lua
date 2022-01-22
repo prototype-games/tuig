@@ -33,31 +33,24 @@ function love.load()
 	a:new_scene("room")
 	-- a.current_scene = "room"
 	a:add_director("room","wasd_director")
-	for _,director in pairs(scripts.directors) do
-		DIRECTORS[director.name] = director
-	end
-	local obj2 = objs.get_test_object()
+	
+	local obj2 = duplicate(scripts.actors.circle)
 
 	a:add_object("room", obj2)
 	obj2.x = 400
+	obj2.y = 300
 	local ll = a:get_scene("room").lines[obj2]
 	ll[#ll+1] = {name="base.idle", interrupt=true}
 	ll["current_line"] = 1
 	local obj = duplicate(scripts.actors.circle)
-	a:add_object("room", obj)
-	ll = a:get_scene("room").lines[obj]
-	ll[#ll+1] = {name="slide_move_fixed_speed", x=100, y=100, speed= 120, interrupt=true}
-	LINE_HANDLERS["slide_move_fixed_speed"].start(ll[1])
-	ll[#ll+1] = {name="slide_move_fixed_speed", x=300, y=100, speed= 120, interrupt=true}
-	ll[#ll+1] = {name="slide_move_fixed_speed", x=200, y=600, speed= 120, interrupt=true}
-	ll[#ll+1] = {name="base.set_counter", counter=2}
-	ll["current_line"] = 1
-	a:move_object_to_scene( "NOROOM", obj)
-	ll = a:get_scene("NOROOM").lines[obj]
-	ll[#ll+1] = {name="slide_move_fixed_speed", x=300, y=100, speed= 120, interrupt=true}
-	ll[#ll+1] = {name="slide_move_fixed_speed", x=200, y=600, speed= 120, interrupt=true}
-	ll[#ll+1] = {name="base.set_counter", counter=4}
+	obj.x = 200
+	obj.y=100
+		a:add_object("room", obj)
+
+	local ll = a:get_scene("room").lines[obj]
 	ll[#ll+1] = {name="base.idle", interrupt=true}
+	ll["current_line"] = 1
+
 
 	a.current_scene = "room"
 	ll["current_line"] = 1
