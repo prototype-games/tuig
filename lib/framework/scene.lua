@@ -51,7 +51,8 @@ local scene_collection = function()
 		end
 		add_obj(scene, scene_name, obj)
 	end
-	function add_director(scenes, scene, director)
+	function add_director(scenes, scene, director_name)
+		local director = DIRECTORS[director_name]
 		scenes.SCENES[scene].directors[director.name] = director.init()
 	end
 	function get_current_scene(obj)

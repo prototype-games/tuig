@@ -1,23 +1,14 @@
 -- automatically fill scripts variable with userscripts.
 scripts = scripts or {}
-local requirements = {}
+local lrequirements = {}
 function my_require(str)
-    requirements[str] = str
+    lrequirements[str] = str
     return require(str)
 end
 
-local KEEP = { "scripts.systems.collision.collision" }
 function un_require()
-    for k, v in pairs(requirements) do
-        local keep = false
-        for _, w in ipairs(KEEP) do
-            if w == v then
-                keep = true
-            end
-        end
-        if not keep then
-            package.loaded[v] = nil
-        end
+    for k, v in pairs(lrequirements) do
+        package.loaded[v] = nil    
     end
 end
 
@@ -63,12 +54,19 @@ end
 RELOADALL = function()
     un_require()
 print(" GAME LOGIC RESET")
-
+local directors = require "lib.framework.directors"
+local scene_collection = require "lib.framework.scene"
+local objs = require "lib.framework.object"
+local bitser = require 'lib.bitser'
+local lines_loader = require"lib.framework.lines"
+local cues_loader = require"lib.framework.cues"
     rl()
-
-    scripts.systems.collision.collision.functions.reset()
-    for k, v in pairs(E.A) do
-        core.filter.update(v)
+    lines_loader(scripts.lines, "")
+    cues_loader(scripts.cues, "")
+    DIRECTORS = {}
+    directors:all_directors(scripts.directors, "")
+    for k,v in pairs(DIRECTORS) do
+        print(k,v)
     end
 end
 rl()

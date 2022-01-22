@@ -28,15 +28,17 @@ require 'lib.load_all_scripts'
 local a = scene_collection()
 
 function love.load()
+	lines_loader(scripts.lines, "")
+	cues_loader(scripts.cues, "")
+	directors:all_directors(scripts.directors, "")
 	a:new_scene("room")
 	-- a.current_scene = "room"
-	a:add_director("room",scripts.directors.wasd_director)
+	a:add_director("room","wasd_director")
 	for _,director in pairs(scripts.directors) do
 		DIRECTORS[director.name] = director
 	end
 	local obj2 = objs.get_test_object()
-	lines_loader(scripts.lines, "")
-	cues_loader(scripts.cues, "")
+
 	a:add_object("room", obj2)
 	obj2.x = 400
 	local ll = a:get_scene("room").lines[obj2]
