@@ -37,8 +37,7 @@ function a()
 		if love.keyboard.isDown( "d" ) then
 			if not  self.wasd.d then
 				print("D")
-				RELOADALL()
-				scene_collection:emit_here("move_cues.move_relative_cue", nil, 500,0)
+				scene_collection:emit_here("move_cues.move_relative_cue", nil, 50,0)
 			end
 			 self.wasd.d = true
 		else

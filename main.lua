@@ -10,7 +10,6 @@ CUE_STORAGE = {add= function(name, constructor, handler)
 	CUE_HANDLERS[name] = handler
 end,
 run= function(name, ...)
-	print(name)
 			local var = CUE_STORAGE[name](...)
 
 			var.name = name
@@ -44,9 +43,7 @@ function love.load()
 	local ll = a:get_scene("room").lines[obj2]
 	ll[#ll+1] = {name="base.idle", interrupt=true}
 	ll["current_line"] = 1
-	print(scripts.actors)
 	local obj = duplicate(scripts.actors.circle)
-	print("A",obj)
 	a:add_object("room", obj)
 	ll = a:get_scene("room").lines[obj]
 	ll[#ll+1] = {name="slide_move_fixed_speed", x=100, y=100, speed= 120, interrupt=true}
