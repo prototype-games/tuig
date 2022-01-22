@@ -2,9 +2,11 @@
 The idea behind TUIG is to have a SCUMM-like framework for programming non-timing-critical videogames in Love2d.
 The focus of this framework is on creating a means of quickly building games that focus on intricate sequences of actions of characters.
 
+## Scenes
+A scene is a location in a game / level / .... 
 
 ## Directors
-Directors are intended as the way for actors to be told to slow down. 
+Directors are intended as controllers of a scene.
 ## Props
 Props are basic objects
 ## Actors
@@ -23,6 +25,9 @@ Cues are synchronisation signals between directors and actors, and between actor
 
 A cue is translated into lines when executed. Cues can be used to set the line-counter, but also to replace the line-booklet entirely.
 
+
+## Love control
+Directors and lines have handlers, which will in the future be able to implement any of love's love.x handlers. The framework should make sure that all directors and all lines's things get executed correctly.
 
 # TODO
 1. Temporary interrupt of normal line cycle, returning to previous position in cycle afterwards
