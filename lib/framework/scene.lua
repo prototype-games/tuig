@@ -35,6 +35,7 @@ local scene_collection = function()
 		scene.SCENES[scene_name].objects[object] = object
 		scene.SCENES[scene_name].lines[object] = {current_line=0}
 		scene.SCENES[scene_name].roles[object] = {}
+		return object
 	end
 	function get_scene(obj, scene_name)
 		return obj.SCENES[scene_name]
@@ -59,7 +60,25 @@ local scene_collection = function()
 		return obj.SCENES[obj.current_scene]
 	end
 	local o =  {new_scene=new_scene, get_scene=get_scene, add_object=add_obj, SCENES={}, emit=emit, emit_here=emit_here, current_scene="NOROOM", get_current_scene=get_current_scene, move_object_to_scene=move_object_to_scene, add_director=add_director}
-	o:new_scene("NOROOM")
+	function add_all_for(scene_collection, obj, prefix)
+		for k,v in pairs(obj) do
+			if type(v) == "table" then
+				if v.scene then
+					-- print(prefix..k)
+					scene_collection:new_scene(prefix..k)
+					v.init(scene_collection, prefix..k)
+				else
+					add_all_for(scene_collection, v, prefix..k..".")
+				end
+			end
+		end
+	end
+	o.add_all_scenes = function(scene_collection)
+		scene_collection:new_scene("NOROOM")
+		add_all_for(scene_collection, scripts.scenes, "")
+
+	end
+	
 
 	return o
 end

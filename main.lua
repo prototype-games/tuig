@@ -27,33 +27,13 @@ require 'lib.load_all_scripts'
 local a = scene_collection()
 
 function love.load()
-	lines_loader(scripts.lines, "")
+	lines_loader(scripts.linereaders, "")
 	cues_loader(scripts.cues, "")
 	directors:all_directors(scripts.directors, "")
-	a:new_scene("room")
-	-- a.current_scene = "room"
-	a:add_director("room","wasd_director")
-	
-	local obj2 = duplicate(scripts.actors.circle)
-
-	a:add_object("room", obj2)
-	obj2.x = 400
-	obj2.y = 300
-	local ll = a:get_scene("room").lines[obj2]
-	ll[#ll+1] = {name="base.idle", interrupt=true}
-	ll["current_line"] = 1
-	local obj = duplicate(scripts.actors.circle)
-	obj.x = 200
-	obj.y=100
-		a:add_object("room", obj)
-
-	local ll = a:get_scene("room").lines[obj]
-	ll[#ll+1] = {name="base.idle", interrupt=true}
-	ll["current_line"] = 1
 
 
+	a:add_all_scenes()
 	a.current_scene = "room"
-	ll["current_line"] = 1
 	-- bitser.dumpLoveFile("savepoint.dat", a.SCENES)
 	-- a.SCENES = bitser.loadLoveFile("savepoint.dat")
 end
