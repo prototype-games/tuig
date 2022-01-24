@@ -32,6 +32,7 @@ local scene_collection = function()
 		emit_scene(c.scene, c)
 	end
 	function add_obj(scene, scene_name, object)
+		scene.phonebook[object.name] = {scene=scene.SCENES[scene_name], actor=object}
 		scene.SCENES[scene_name].objects[object] = object
 		scene.SCENES[scene_name].lines[object] = {current_line=0}
 		scene.SCENES[scene_name].roles[object] = {}
@@ -41,12 +42,11 @@ local scene_collection = function()
 		return obj.SCENES[scene_name]
 	end
 	function move_object_to_scene(scene,scene_name, obj)
+		scene.phonebook[object.name] = {scene=scene.SCENES[scene_name], actor=object}
 		for _,scn in pairs(scene.SCENES) do
 			for _,v in pairs(scn.objects) do
 				if v == obj then
 					scn.objects[v] = nil
-					scn.lines[v] = nil
-					scn.roles[v] = nil
 				end
 			end
 		end
@@ -59,7 +59,17 @@ local scene_collection = function()
 	function get_current_scene(obj)
 		return obj.SCENES[obj.current_scene]
 	end
-	local o =  {new_scene=new_scene, get_scene=get_scene, add_object=add_obj, SCENES={}, emit=emit, emit_here=emit_here, current_scene="NOROOM", get_current_scene=get_current_scene, move_object_to_scene=move_object_to_scene, add_director=add_director}
+	function whereis(scenes, actor_name)
+			return scenes.phonebook[actor_name].actor, scenes.phonebook[actor_name].scene 
+	end
+	function reset_phonebook(scenes)
+		for scene_name, scene in pairs(SCENES) do
+			for actor, _ in pairs(scene.objects) do
+				scene.phonebook[actor.name] = {scene=scene, actor=actor}
+			end
+		end
+	end
+	local o =  {reset_phonebook=reset_phonebook, whereis=whereis, new_scene=new_scene, get_scene=get_scene, add_object=add_obj, SCENES={}, emit=emit, emit_here=emit_here, current_scene="NOROOM", get_current_scene=get_current_scene, move_object_to_scene=move_object_to_scene, add_director=add_director}
 	function add_all_for(scene_collection, obj, prefix)
 		for k,v in pairs(obj) do
 			if type(v) == "table" then
@@ -79,6 +89,7 @@ local scene_collection = function()
 
 	end
 	
+	o.phonebook = {}
 
 	return o
 end

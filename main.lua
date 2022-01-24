@@ -43,7 +43,7 @@ function love.update(dt)
 	for k,v in pairs(a:get_current_scene().directors)do
 		DIRECTORS[k].update(v, dt, a:get_current_scene(), a)
 	end
-
+	print(a:whereis("circle"))
 	--k=object, v=lines
 	for k,v in pairs(a:get_current_scene().lines) do
 		local my_time = dt
