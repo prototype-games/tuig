@@ -2,49 +2,31 @@ local directors = require "lib.framework.directors"
 local scene_collection = require "lib.framework.scene"
 local objs = require "lib.framework.object"
 local bitser = require 'lib.bitser'
-local lines_loader = require"lib.framework.lines"
-local cues_loader = require"lib.framework.cues"
-
-CUE_STORAGE = {add= function(name, constructor, handler)
-	CUE_STORAGE[name] = constructor
-	CUE_HANDLERS[name] = handler
-end,
-run= function(name, ...)
-			local var = CUE_STORAGE[name](...)
-
-			var.name = name
-			return var
-	end
-}
-CUE_HANDLERS = {}
-
-LINE_HANDLERS = {add=function(name, start, update, draw)
-	LINE_HANDLERS[name]={start=start,update=update, draw=draw}
-end}
-DIRECTORS = {}
+local lines_loader = require "lib.framework.lines"
+local cues_loader = require "lib.framework.cues"
+require "base"
 require 'lib.load_all_scripts'
 
+
 local a = scene_collection()
+
 
 function love.load()
 	lines_loader(scripts.linereaders, "")
 	cues_loader(scripts.cues, "")
 	directors:all_directors(scripts.directors, "")
-
-
 	a:add_all_scenes()
 	a.current_scene = "room"
-	-- bitser.dumpLoveFile("savepoint.dat", a.SCENES)
-	-- a.SCENES = bitser.loadLoveFile("savepoint.dat")
+	bitser.dumpLoveFile("savepoint.dat", a.SCENES)
+	a.SCENES = bitser.loadLoveFile("savepoint.dat")
 end
 
+
 function love.update(dt)
-	-- print(dt)
 	for k,v in pairs(a:get_current_scene().directors)do
 		DIRECTORS[k].update(v, dt, a:get_current_scene(), a)
 	end
-	print(a:whereis("circle"))
-	--k=object, v=lines
+
 	for k,v in pairs(a:get_current_scene().lines) do
 		local my_time = dt
 		local acted=true
@@ -73,16 +55,23 @@ function love.update(dt)
 			end
 		end
 	end
-		-- bitser.dumpLoveFile("savepoint.dat", a.SCENES)
-
 end	
 
-
-function love.draw()
-	for k,v in pairs(a:get_current_scene().lines) do
-		if v[v.current_line] then
-			LINE_HANDLERS[v[v.current_line].name].draw(v,k)
-		end
-	end
-end
-
+loveRoll("draw", a, true)
+loveRoll("keypressed", a)
+loveRoll("keyreleased", a)
+loveRoll("mousemoved", a)
+loveRoll("mousepressed", a)
+loveRoll("mousereleased", a)
+loveRoll("gamepadaxis", a)
+loveRoll("gamepadpressed", a)
+loveRoll("gamepadreleased", a)
+loveRoll("joystickadded", a)
+loveRoll("joystickaxis", a)
+loveRoll("joystickhat", a)
+loveRoll("joystickpressed", a)
+loveRoll("joystickreleased", a)
+loveRoll("joystickremoved", a)
+loveRoll("touchmoved", a)
+loveRoll("touchpressed", a)
+loveRoll("touchreleased", a)
