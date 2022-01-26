@@ -16,7 +16,7 @@ LINE_HANDLERS = {add=function(name, start, update, draw)
 end}
 DIRECTORS = {}
 
-function loveRoll(name, a, aa)
+function loveHug(name, a, aa)
 	love[name] =  function(...)
 		local should_return = false
 		
