@@ -22,7 +22,7 @@ function loveRoll(name, a, aa)
 		
 		for k,v in pairs(a:get_current_scene().directors)do
 			if DIRECTORS[k][name] then
-				should_return = should_return or DIRECTORS[k][name](v, dt, a:get_current_scene(), a)
+				should_return = should_return or DIRECTORS[k][name](v, dt, a:get_current_scene(), a, ...)
 			end
 		end
 		
@@ -31,8 +31,8 @@ function loveRoll(name, a, aa)
 		end
 
 		for k,v in pairs(a:get_current_scene().lines) do
-			if v[v.current_line] then
-				LINE_HANDLERS[v[v.current_line].name].draw(v,k)
+			if v[v.current_line] and  LINE_HANDLERS[v[v.current_line].name][name] then
+				LINE_HANDLERS[v[v.current_line].name][name](v,k, ...)
 			end
 		end
 	end

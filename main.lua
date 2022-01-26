@@ -24,7 +24,9 @@ end
 
 function love.update(dt)
 	for k,v in pairs(a:get_current_scene().directors)do
-		DIRECTORS[k].update(v, dt, a:get_current_scene(), a)
+		if  DIRECTORS[k].update then
+			DIRECTORS[k].update(v, dt, a:get_current_scene(), a)
+		end
 	end
 
 	for k,v in pairs(a:get_current_scene().lines) do
