@@ -1,7 +1,7 @@
 local directors = require "lib.framework.directors"
 local scene_collection = function()
 	function new_scene(obj,scene_name)
-		local scene = {name=scene_name, objects={}, roles={}, lines={}, directors={}}
+		local scene = {name=scene_name, objects={}, lines={}, directors={}}
 		obj.SCENES[scene_name] = scene
 		scene.pipeline = {}
 		return scene
@@ -31,17 +31,16 @@ local scene_collection = function()
 		local c = CUE_STORAGE.run(name, scene_collection:get_current_scene(), ...)
 		emit_scene(c.scene, c)
 	end
-	function add_obj(scene, scene_name, object)
-		scene.phonebook[object.name] = {scene=scene.SCENES[scene_name], actor=object}
-		scene.SCENES[scene_name].objects[object] = object
-		scene.SCENES[scene_name].lines[object] = {current_line=0}
-		scene.SCENES[scene_name].roles[object] = {}
-		return object
+	function add_actor(scene, scene_name, actor)
+		scene.phonebook[actor.name] = {scene=scene.SCENES[scene_name], actor=actor}
+		scene.SCENES[scene_name].objects[actor] = actor
+		scene.SCENES[scene_name].lines[actor] = {current_line=0}
+		return actor
 	end
 	function get_scene(obj, scene_name)
 		return obj.SCENES[scene_name]
 	end
-	function move_object_to_scene(scene,scene_name, obj)
+	function move_actor_to_scene(scene,scene_name, obj)
 		scene.phonebook[object.name] = {scene=scene.SCENES[scene_name], actor=object}
 		for _,scn in pairs(scene.SCENES) do
 			for _,v in pairs(scn.objects) do
@@ -69,7 +68,7 @@ local scene_collection = function()
 			end
 		end
 	end
-	local o =  {reset_phonebook=reset_phonebook, whereis=whereis, new_scene=new_scene, get_scene=get_scene, add_object=add_obj, SCENES={}, emit=emit, emit_here=emit_here, current_scene="NOROOM", get_current_scene=get_current_scene, move_object_to_scene=move_object_to_scene, add_director=add_director}
+	local o =  {reset_phonebook=reset_phonebook, whereis=whereis, new_scene=new_scene, get_scene=get_scene, add_actor=add_actor, SCENES={}, emit=emit, emit_here=emit_here, emit_scene=emit_scene, current_scene="NOROOM", get_current_scene=get_current_scene, move_actor_to_scene=move_actor_to_scene, add_director=add_director}
 	function add_all_for(scene_collection, obj, prefix)
 		for k,v in pairs(obj) do
 			if type(v) == "table" then

@@ -17,6 +17,7 @@ function update(line, dt, object)
 end
 
 start = function(line)
+	print("YOU CAN START ME UP")
 	line.remaining_time = line.duration
 end
 draw = function(line, object)

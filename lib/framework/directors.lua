@@ -1,7 +1,6 @@
 local lib = {}
 
 function lib:add_director(director)
-
 	self.directors[#self.directors+1] = director
 end
 function lib:run_directors()

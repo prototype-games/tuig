@@ -1,83 +1,73 @@
 local directors = require "lib.framework.directors"
 local scene_collection = require "lib.framework.scene"
 local objs = require "lib.framework.object"
-local actor_fw= require "lib.framework.actors"
-
 local bitser = require 'lib.bitser'
-local lines_loader = require "lib.framework.lines"
+actor_fw= require "lib.framework.actors"
+lines_loader = require "lib.framework.lines"
 local cues_loader = require "lib.framework.cues"
 require "base"
 require 'lib.load_all_scripts'
+pprint = require "lib.pprint"
 
-
-local a = scene_collection()
+SCENECOLLECTION = scene_collection()
 
 
 function love.load()
-	lines_loader(scripts.linereaders, "")
+	lines_loader.get_lines(scripts.linereaders, "")
 	cues_loader(scripts.cues, "")
 	directors:all_directors(scripts.directors, "")
-	a:add_all_scenes()
-	a.current_scene = "room"
-	bitser.dumpLoveFile("savepoint.dat", a.SCENES)
-	a.SCENES = bitser.loadLoveFile("savepoint.dat")
-
+	SCENECOLLECTION:add_all_scenes()
+	SCENECOLLECTION.current_scene = "room"
+	bitser.dumpLoveFile("savepoint.dat", SCENECOLLECTION.SCENES)
+	SCENECOLLECTION.SCENES = bitser.loadLoveFile("savepoint.dat")
 end
 
 
 function love.update(dt)
-	for k,v in pairs(a:get_current_scene().directors)do
+	for k,v in pairs(SCENECOLLECTION:get_current_scene().directors)do
 		if  DIRECTORS[k].update then
-			DIRECTORS[k].update(v, dt, a:get_current_scene(), a)
+			DIRECTORS[k].update(v, dt, SCENECOLLECTION:get_current_scene(), SCENECOLLECTION)
 		end
 	end
+	local current_scene=SCENECOLLECTION:get_current_scene()
+	for actor,_ in pairs(current_scene.objects) do
+		local time_left = dt
+		while time_left > 0 do
+			local line, lines = actor_fw.get_line(current_scene, actor)
 
-	for k,v in pairs(a:get_current_scene().lines) do
-		print(actor_fw.get_line(a, k))
-		local my_time = dt
-		local acted=true
-		while my_time > 0 and acted do
-			acted=false
-			for i,z in ipairs(v) do
-				if v.current_line  == i then
-					-- todo: update to remove finished function and instead have the update function return remaining time
-					my_time = LINE_HANDLERS[v[v.current_line].name].update(z, dt, k, v)
-					acted=true					
-					if my_time > 0 then
-						if v[v.current_line] and  LINE_HANDLERS[v[v.current_line].name].finish then
-							LINE_HANDLERS[v[v.current_line].name].finish(v[v.current_line], v)
-						end
-						v.current_line =  v.current_line  + 1
-						if v[v.current_line] and LINE_HANDLERS[v[v.current_line].name].start then
-							LINE_HANDLERS[v[v.current_line].name].start(v[v.current_line], v)
-						else
-							my_time = 0
-						end
-						break
-					else
-						break
-					end
-				end
+			if LINE_HANDLERS[line.name].update then
+				time_left = LINE_HANDLERS[line.name].update(line, dt, actor, current_scene.lines[actor])
+			end
+			if time_left > 0 then
+				if LINE_HANDLERS[line.name].finish then
+					LINE_HANDLERS[line.name].finish(line, current_scene.lines[actor], actor)
+				end	
+				local line = actor_fw.next_line(current_scene, actor)
+
+				if LINE_HANDLERS[line.name].start then
+					LINE_HANDLERS[line.name].start(line, current_scene.lines[actor], actor)
+				end	
+				-- INCREMENT_LINE_THINGY
 			end
 		end
 	end
 end	
 
-loveHug("draw", a, true)
-loveHug("keypressed", a)
-loveHug("keyreleased", a)
-loveHug("mousemoved", a)
-loveHug("mousepressed", a)
-loveHug("mousereleased", a)
-loveHug("gamepadaxis", a)
-loveHug("gamepadpressed", a)
-loveHug("gamepadreleased", a)
-loveHug("joystickadded", a)
-loveHug("joystickaxis", a)
-loveHug("joystickhat", a)
-loveHug("joystickpressed", a)
-loveHug("joystickreleased", a)
-loveHug("joystickremoved", a)
-loveHug("touchmoved", a)
-loveHug("touchpressed", a)
-loveHug("touchreleased", a)
+loveHug("draw", SCENECOLLECTION, true)
+loveHug("keypressed", SCENECOLLECTION)
+loveHug("keyreleased", SCENECOLLECTION)
+loveHug("mousemoved", SCENECOLLECTION)
+loveHug("mousepressed", SCENECOLLECTION)
+loveHug("mousereleased", SCENECOLLECTION)
+loveHug("gamepadaxis", SCENECOLLECTION)
+loveHug("gamepadpressed", SCENECOLLECTION)
+loveHug("gamepadreleased", SCENECOLLECTION)
+loveHug("joystickadded", SCENECOLLECTION)
+loveHug("joystickaxis", SCENECOLLECTION)
+loveHug("joystickhat", SCENECOLLECTION)
+loveHug("joystickpressed", SCENECOLLECTION)
+loveHug("joystickreleased", SCENECOLLECTION)
+loveHug("joystickremoved", SCENECOLLECTION)
+loveHug("touchmoved", SCENECOLLECTION)
+loveHug("touchpressed", SCENECOLLECTION)
+loveHug("touchreleased", SCENECOLLECTION)

@@ -1,5 +1,5 @@
 local a  = {}
-a.name="circle"
+a.name="circle2"
 a.sprite = "circ"
 a.renderer = "circ"
 a.x = 0

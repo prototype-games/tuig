@@ -30,8 +30,7 @@ function a()
 		end
 	end
 	function dir:mousepressed(dt, scene, scene_collection, x,y)
-					scene_collection:emit_here("move_cues.move_to_coords_cue", nil, x,y)	
-
+		scene_collection:emit_here("move_cues.move_to_coords_cue", nil, x,y)	
 	end
 	function dir:init(scene)
 		local res = {name=dir.name, wasd={}}

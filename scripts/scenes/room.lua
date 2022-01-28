@@ -1,13 +1,36 @@
 local scene = {}
 
 function scene.init(scene_collection, name)
-	local obj = scene_collection.add_object(scene_collection, name, duplicate_actor(scripts.actors.circle.constr))
-	obj.x = 400
-	obj.y = 200
-	scene_collection.SCENES[name].lines[obj] = {{name="base.idle", interrupt=true}, current_line=1}
+	local i =0
+	
+	-- Circle actor is the best actor ever
+	-- he never disobeys his director
+	local circle_actor = scene_collection.add_actor(scene_collection, name, duplicate_actor(scripts.actors.circle.constr))
+	circle_actor.x = 400
+	circle_actor.y = 200
+	local my_scene = scene_collection.SCENES[name]
+	lines_loader.add_lineset(my_scene , circle_actor,  
+	{
+		BOUNCING =	{
+			{name="slide_move", x=800, y=500, duration=1},
+			{name="slide_move", x=400, y=400, duration=1, interrupt=true},
+			{name="base.set_counter", counter=1},
+		},
+		APPLAUD = {
+			{name="base.idle", duration=4},
+			current_line=1
+		},
+		IDLE= {
+			{name="base.idle", interrupt=true}
+		},
+		current={"IDLE", "BOUNCING", "APPLAUD"}
+	})
+
+
+
+
 	scene_collection:add_director(name,"wasd_director")
-
-
+	i =  i+1
 end
 scene.scene=true
 return scene
