@@ -12,25 +12,32 @@ function a()
 		end
 		if key == "w"  then
 			print("W")
-			scene_collection:emit_here("move_cues.move_relative_cue", nil, 0,-50)
+			cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_relative_cue, 0,-50)
 		end
 
 		if key == "a" then
 			print("A")
-			scene_collection:emit_here("move_cues.move_relative_cue", nil, -50,0)
+			cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_relative_cue, -50,0)
+			
 		end
 		if key=="s" then
 			print("S")
-			scene_collection:emit_here("move_cues.move_relative_cue", nil, 0,50)	
+					cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_relative_cue, 0,50)
+			
 		end
 		if key=="d" then	
 			print("D")
-			scene_collection:emit_here("move_cues.move_relative_cue", nil, 50,0)
-			
+			cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_relative_cue, 50,0)
+				
 		end
 	end
 	function dir:mousepressed(dt, scene, scene_collection, x,y)
-		scene_collection:emit_here("move_cues.move_to_coords_cue", nil, x,y)	
+		for k,v in  pairs(scene.lines) do
+			if #v >0 and v.current_line <= #v and not v[v.current_line].interrupt then
+				return
+			end
+		end
+		cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_to_coords_cue, x,y)
 	end
 	function dir:init(scene)
 		local res = {name=dir.name, wasd={}}

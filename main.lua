@@ -4,37 +4,35 @@ local objs = require "lib.framework.object"
 local bitser = require 'lib.bitser'
 actor_fw= require "lib.framework.actors"
 lines_loader = require "lib.framework.lines"
-local cues_loader = require "lib.framework.cues"
+cues_loader = require "lib.framework.cues"
 require "base"
 require 'lib.load_all_scripts'
 pprint = require "lib.pprint"
 
-SCENECOLLECTION = scene_collection()
+AFW = scene_collection()
 
 
 function love.load()
 	lines_loader.get_lines(scripts.linereaders, "")
-	cues_loader(scripts.cues, "")
 	directors:all_directors(scripts.directors, "")
-	SCENECOLLECTION:add_all_scenes()
-	SCENECOLLECTION.current_scene = "room"
-	bitser.dumpLoveFile("savepoint.dat", SCENECOLLECTION.SCENES)
-	SCENECOLLECTION.SCENES = bitser.loadLoveFile("savepoint.dat")
+	AFW:add_all_scenes()
+	AFW.current_scene = "room"
+	bitser.dumpLoveFile("savepoint.dat", AFW.SCENES)
+	AFW.SCENES = bitser.loadLoveFile("savepoint.dat")
 end
 
 
 function love.update(dt)
-	for k,v in pairs(SCENECOLLECTION:get_current_scene().directors)do
+	for k,v in pairs(AFW:get_current_scene().directors)do
 		if  DIRECTORS[k].update then
-			DIRECTORS[k].update(v, dt, SCENECOLLECTION:get_current_scene(), SCENECOLLECTION)
+			DIRECTORS[k].update(v, dt, AFW:get_current_scene(), AFW)
 		end
 	end
-	local current_scene=SCENECOLLECTION:get_current_scene()
+	local current_scene=AFW:get_current_scene()
 	for actor,_ in pairs(current_scene.objects) do
 		local time_left = dt
 		while time_left > 0 do
 			local line, lines = actor_fw.get_line(current_scene, actor)
-
 			if LINE_HANDLERS[line.name].update then
 				time_left = LINE_HANDLERS[line.name].update(line, dt, actor, current_scene.lines[actor])
 			end
@@ -53,21 +51,21 @@ function love.update(dt)
 	end
 end	
 
-loveHug("draw", SCENECOLLECTION, true)
-loveHug("keypressed", SCENECOLLECTION)
-loveHug("keyreleased", SCENECOLLECTION)
-loveHug("mousemoved", SCENECOLLECTION)
-loveHug("mousepressed", SCENECOLLECTION)
-loveHug("mousereleased", SCENECOLLECTION)
-loveHug("gamepadaxis", SCENECOLLECTION)
-loveHug("gamepadpressed", SCENECOLLECTION)
-loveHug("gamepadreleased", SCENECOLLECTION)
-loveHug("joystickadded", SCENECOLLECTION)
-loveHug("joystickaxis", SCENECOLLECTION)
-loveHug("joystickhat", SCENECOLLECTION)
-loveHug("joystickpressed", SCENECOLLECTION)
-loveHug("joystickreleased", SCENECOLLECTION)
-loveHug("joystickremoved", SCENECOLLECTION)
-loveHug("touchmoved", SCENECOLLECTION)
-loveHug("touchpressed", SCENECOLLECTION)
-loveHug("touchreleased", SCENECOLLECTION)
+loveHug("draw", AFW, true)
+loveHug("keypressed", AFW)
+loveHug("keyreleased", AFW)
+loveHug("mousemoved", AFW)
+loveHug("mousepressed", AFW)
+loveHug("mousereleased", AFW)
+loveHug("gamepadaxis", AFW)
+loveHug("gamepadpressed", AFW)
+loveHug("gamepadreleased", AFW)
+loveHug("joystickadded", AFW)
+loveHug("joystickaxis", AFW)
+loveHug("joystickhat", AFW)
+loveHug("joystickpressed", AFW)
+loveHug("joystickreleased", AFW)
+loveHug("joystickremoved", AFW)
+loveHug("touchmoved", AFW)
+loveHug("touchpressed", AFW)
+loveHug("touchreleased", AFW)

@@ -31,7 +31,11 @@ frame["idle"] ={start=function(line, _ , _)
 	 		return 0
 	end,
 	draw=function(line, object)
-		love.graphics.setColor(1,0,0)
+		if line.color then
+			love.graphics.setColor(line.color.r, line.color.g,line.color.b, line.color.a)
+		else
+			love.graphics.setColor(0,1,0)
+		end
 		love.graphics.circle("fill", object.x,object.y, 50)
 		love.graphics.setColor(1,1,1)
 	end

@@ -6,9 +6,21 @@ function scene.init(scene_collection, name)
 	-- Circle actor is the best actor ever
 	-- he never disobeys his director
 	local circle_actor = scene_collection.add_actor(scene_collection, name, duplicate_actor(scripts.actors.circle.constr))
+	local circle_actor2 = scene_collection.add_actor(scene_collection, name, duplicate_actor(scripts.actors.other_circle.constr))
+
+	local my_scene = scene_collection.SCENES[name]
+
+	lines_loader.add_lineset(my_scene , circle_actor2,  
+	
+		{
+			IDLE={{name="base.idle"}, current_line=1, interrupt=true},
+			current={"IDLE"}
+		})
+
+	
+
 	circle_actor.x = 400
 	circle_actor.y = 200
-	local my_scene = scene_collection.SCENES[name]
 	lines_loader.add_lineset(my_scene , circle_actor,  
 	{
 		BOUNCING =	{
@@ -28,6 +40,7 @@ function scene.init(scene_collection, name)
 
 
 
+	scene_collection:add_director(name,"dierector")
 
 	scene_collection:add_director(name,"wasd_director")
 	i =  i+1

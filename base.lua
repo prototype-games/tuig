@@ -1,16 +1,3 @@
-CUE_STORAGE = {add= function(name, constructor, handler)
-		CUE_STORAGE[name] = constructor
-		CUE_HANDLERS[name] = handler
-	end,
-	run = function(name, ...)
-			local var = CUE_STORAGE[name](...)
-
-			var.name = name
-			return var
-	end
-}
-CUE_HANDLERS = {}
-
 LINE_HANDLERS = {add=function(name, start, update, draw)
 	LINE_HANDLERS[name]={start=start,update=update, draw=draw}
 end 
@@ -21,7 +8,7 @@ DIRECTORS = {}
 function loveHug(name, scene_collection, skip_lines_if_any_director_successful)
 	love[name] =  function(...)
 		local should_return = false
-			local current_scene=SCENECOLLECTION:get_current_scene()
+			local current_scene=AFW:get_current_scene()
 
 		for k,v in pairs(scene_collection:get_current_scene().directors)do
 			if DIRECTORS[k][name] then

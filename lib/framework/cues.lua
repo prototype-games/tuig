@@ -1,13 +1,13 @@
-local function get_cues(obj, prefix)
-	for k,v in pairs(obj) do
-		if type(v) == "table" then
-			if v.constructor and v.handler then
-				CUE_STORAGE.add(prefix..k, v.constructor, v.handler)
-				print(prefix..k)
-			else
-				get_cues(v, prefix..k..".")
-			end
-		end
+local function get_actor_by_name(name)
+	return function()
+		return AFW.whereis(name)
 	end
 end
-return get_cues
+local function execute_cue(filter, cue, ...)
+	local actors = filter()
+	for _, actor_and_scene in ipairs(actors) do
+		cue(actor_and_scene.scene, actor_and_scene.actor, ...)
+	end
+end
+
+return {execute_cue=execute_cue, get_actor_by_name=get_actor_by_name}
