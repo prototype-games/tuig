@@ -1,6 +1,8 @@
 local directors = require "lib.framework.directors"
 local scene_collection = require "lib.framework.scene"
 local objs = require "lib.framework.object"
+local actor_fw= require "lib.framework.actors"
+
 local bitser = require 'lib.bitser'
 local lines_loader = require "lib.framework.lines"
 local cues_loader = require "lib.framework.cues"
@@ -19,6 +21,7 @@ function love.load()
 	a.current_scene = "room"
 	bitser.dumpLoveFile("savepoint.dat", a.SCENES)
 	a.SCENES = bitser.loadLoveFile("savepoint.dat")
+
 end
 
 
@@ -30,6 +33,7 @@ function love.update(dt)
 	end
 
 	for k,v in pairs(a:get_current_scene().lines) do
+		print(actor_fw.get_line(a, k))
 		local my_time = dt
 		local acted=true
 		while my_time > 0 and acted do
