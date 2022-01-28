@@ -25,7 +25,7 @@ local function load_script(url)
                 a[word] = {}
             end
             a = a[word]
-        end
+        end 
         first = false
     end
 
@@ -73,6 +73,7 @@ rl()
 
 function duplicate(obj)
     print(obj)
+
     if type(obj) ~= "table" then
         return obj
     end
@@ -80,5 +81,15 @@ function duplicate(obj)
     for k,v in pairs(obj) do
         a[k] = duplicate(v)
     end
+    return a
+end
+
+function duplicate_actor(obj)
+    local a = duplicate(obj)
+    if obj.init and type(obj.init) == "function" then
+        a.init=nil
+        obj:init(a)
+    end
+    
     return a
 end
