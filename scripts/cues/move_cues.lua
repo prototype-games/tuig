@@ -14,7 +14,7 @@ frame["move_to_coords_cue"] =
 	
 		local lines = { {name="slide_move_fixed_speed", x=x, y=y, speed= 400}}
 
-	 	lines_loader.push_to_lines(scene.lines[actor], "move_to_coords_cue", lines)
+	 	lines_loader.add_to_lineset_or_push(scene.lines[actor], "move_to_coords_cue", lines, {"move_to_coords_cue"})
 	 	print("HERE")
 	end
 

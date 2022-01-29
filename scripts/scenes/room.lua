@@ -10,14 +10,12 @@ function scene.init(scene_collection, name)
 
 	local my_scene = scene_collection.SCENES[name]
 
-	lines_loader.add_lineset(my_scene , circle_actor2,  
-	
+	lines_loader.add_lineset(my_scene , circle_actor2,	
 		{
 			IDLE={{name="base.idle"}, current_line=1, interrupt=true},
 			current={"IDLE"}
 		})
 
-	
 
 	circle_actor.x = 400
 	circle_actor.y = 200

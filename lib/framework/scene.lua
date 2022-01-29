@@ -8,7 +8,7 @@ local scene_collection = function()
 	end
 
 	function add_actor(scene, scene_name, actor)
-		scene.phonebook[actor.name] = {scene=scene.SCENES[scene_name], actor=actor}
+		scene.phonebook[actor] = {scene=scene.SCENES[scene_name]}
 		scene.SCENES[scene_name].objects[actor] = actor
 		scene.SCENES[scene_name].lines[actor] = {current_line=0}
 		return actor
@@ -16,25 +16,26 @@ local scene_collection = function()
 	function get_scene(obj, scene_name)
 		return obj.SCENES[scene_name]
 	end
-	function move_actor_to_scene(scene, scene_name, obj)
-		scene.phonebook[object.name] = {scene=scene.SCENES[scene_name], actor=object}
-		for _,scn in pairs(scene.SCENES) do
-			for _,v in pairs(scn.objects) do
-				if v == obj then
-					scn.objects[v] = nil
-				end
-			end
+	function move_actor_to_scene(scene, scene_name, actor)
+		local prev_scene = scene.phonebook[actor]
+		if prev_scene then
+			prev_scene.objects[actor] = nil
 		end
-		add_obj(scene, scene_name, obj)
+		scene.phonebook[actor] = scene.SCENES[scene_name]
+		
+		add_obj(scene, scene_name, actor)
 	end
 	function add_director(scenes, scene, director_name)
 		local director = DIRECTORS[director_name]
 		scenes.SCENES[scene].directors[director.name] = director.init()
 	end
+	function whereis(scenes, actor)
+		return scenes.phonebook[actor]
+	end
 	function get_current_scene(obj)
 		return obj.SCENES[obj.current_scene]
 	end
-	function whereis(actor_name)
+	function get_actor_by_name(actor_name)
 		local result = {}
 		for _, scene in pairs(AFW.SCENES) do
 			for actor, _ in pairs(scene.objects) do
@@ -48,13 +49,13 @@ local scene_collection = function()
 	function reset_phonebook(scenes)
 		for scene_name, scene in pairs(SCENES) do
 			for actor, _ in pairs(scene.objects) do
-				scene.phonebook[actor.name] = {scene=scene, actor=actor}
+				scene.phonebook[actor] = {scene=scene}
 			end
 		end
 	end
 	local o =  {
 		reset_phonebook=reset_phonebook,
-		 whereis=whereis,
+		 get_actor_by_name=get_actor_by_name,
 		  new_scene=new_scene,
 		   get_scene=get_scene,
 		    add_actor=add_actor,
@@ -62,7 +63,8 @@ local scene_collection = function()
 		 current_scene="NOROOM",
 		  get_current_scene=get_current_scene,
 		   move_actor_to_scene=move_actor_to_scene,
-		    add_director=add_director
+		    add_director=add_director,
+		    whereis=whereis
 		}
 
 	function add_all_for(scene_collection, obj, prefix)
