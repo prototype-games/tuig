@@ -32,8 +32,8 @@ local scene_collection = function()
 	function whereis(scenes, actor)
 		return scenes.phonebook[actor]
 	end
-	function get_current_scene(obj)
-		return obj.SCENES[obj.current_scene]
+	function get_current_scene(scenes)
+		return scenes.SCENES[scenes.current_scene]
 	end
 	function get_actor_by_name(actor_name)
 		local result = {}
