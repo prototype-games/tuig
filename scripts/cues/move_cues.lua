@@ -16,6 +16,6 @@ frame["move_to_coords_cue"] =
 	}
 
  	lines_loader.add_to_lineset_or_push(scene.lines[actor], "move_to_coords_cue", lines, {"move_to_coords_cue"})
-
+end
 
 return frame
