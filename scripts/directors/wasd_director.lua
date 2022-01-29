@@ -31,13 +31,14 @@ function a()
 				
 		end
 	end
-	function dir:mousepressed(dt, scene, scene_collection, x,y)
+	function dir:mousepressed(dt, scene, scene_collection, x,y, btn)
+
 		for k,v in  pairs(scene.lines) do
 			if #v >0 and v.current_line <= #v and not v[v.current_line].interrupt then
 				return
 			end
 		end
-		cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_to_coords_cue, x,y)
+		cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_to_coords_cue, x,y, btn==2)
 	end
 	function dir:init(scene)
 		local res = {name=dir.name, wasd={}}
