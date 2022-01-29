@@ -8,7 +8,7 @@ DIRECTORS = {}
 function loveHug(name, scene_collection, skip_lines_if_any_director_successful)
 	love[name] =  function(...)
 		local should_return = false
-			local current_scene=AFW:get_current_scene()
+		local current_scene=AFW:get_current_scene()
 
 		for k,v in pairs(scene_collection:get_current_scene().directors)do
 			if DIRECTORS[k][name] then

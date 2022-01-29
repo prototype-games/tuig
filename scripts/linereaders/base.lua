@@ -50,6 +50,6 @@ frame["cam_to_room"] = {start=function(_, _, _)
 	draw=function(line, object)
 		
 	end
-	}
+}
 
 return frame
