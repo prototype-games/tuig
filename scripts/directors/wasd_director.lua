@@ -22,13 +22,14 @@ function a()
 		end
 		if key=="s" then
 			print("S")
-					cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_relative_cue, 0,50)
-			
+			cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_relative_cue, 0,50)
 		end
 		if key=="d" then	
 			print("D")
-			cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_relative_cue, 50,0)
-				
+			cues_loader.execute_cue(cues_loader.get_actor_by_name("circle2"), scripts.cues.move_cues.move_relative_cue, 50,0)	
+		end
+		if key =="1" then
+			AFW:add_all_scenes()
 		end
 	end
 	function dir:mousepressed(dt, scene, scene_collection, x,y, btn)

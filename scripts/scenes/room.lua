@@ -39,6 +39,7 @@ function scene.init(scene_collection, name)
 
 
 	scene_collection:add_director(name,"dierector")
+	scene_collection:add_director(name,"reset_director")
 
 	scene_collection:add_director(name,"wasd_director")
 	i =  i+1
