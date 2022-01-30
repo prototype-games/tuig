@@ -21,8 +21,16 @@ function scene.init(scene_collection, name)
 	circle_actor.y = 200
 	lines_loader.add_lineset(my_scene , circle_actor,  
 	{
+		WAIT_FOR={
+					{
+					name="base.wait_for_signal",
+					 signal="test",
+					 alt_line={name="base.idle"}
+					}
+		},
 		BOUNCING =	{
-			{name="slide_move", x=800, y=500, duration=1},
+			{name="slide_move", x=0, y=400, duration=1, interrupt=true},
+
 			{name="slide_move", x=400, y=400, duration=1, interrupt=true},
 			{name="base.set_counter", counter=1},
 		},
@@ -33,7 +41,7 @@ function scene.init(scene_collection, name)
 		IDLE= {
 			{name="base.idle", interrupt=true}
 		},
-		current={"IDLE", "BOUNCING", "APPLAUD"}
+		current={"IDLE", "BOUNCING", "WAIT_FOR"}
 	})
 
 

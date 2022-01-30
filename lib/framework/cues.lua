@@ -12,10 +12,23 @@ end
 
 local function data_to_director(actor, line, scene)
 	if not scene then
-		
+
 	end
 	local director = AFW.SCENES[scene].directors[line.director_name]
 	director[line.function_name](actor, line, scene)
 end
 
-return {execute_cue=execute_cue, get_actor_by_name=get_actor_by_name, data_to_director=data_to_director}
+local function emit_waitfor(scene, actor, signal_name)
+	local line, _ =lib.framework.actors.get_line(scene, actor)
+	if line.name=="base.wait_for_signal" then
+		if line.signal==signal_name then
+			local line, lines = lib.framework.actors.next_line(scene, actor)	
+			LINE_HANDLERS[line.name].start(line, lines, actor)
+		end
+	end
+end
+return {execute_cue=execute_cue,
+	 get_actor_by_name=get_actor_by_name,
+	 data_to_director=data_to_director,
+	 emit_waitfor=emit_waitfor,
+	}

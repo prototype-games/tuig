@@ -51,5 +51,29 @@ frame["cam_to_room"] = {start=function(_, _, _)
 		
 	end
 }
+--{
+-- signal=str
+-- alt_line = line
+--}
+frame["wait_for_signal"] = {
+	update=function(line, dt, object, lines)
+		LINE_HANDLERS[line.alt_line.name].update(line.alt_line, dt, object, lines)
+	 	return 0
+	end,
+	draw=function(line, object)
+		LINE_HANDLERS[line.alt_line.name].draw(line.alt_line, object)
+	end	
+}
+
+frame["data_to_actor"] = {
+	update=function(line, dt, object, lines)
+		LINE_HANDLERS[line.alt_line.name].update(line.alt_line, dt, object, lines)
+	 	return dt
+	end,
+	draw=function(line, object)
+		LINE_HANDLERS[line.alt_line.name].draw(line.alt_line, object)
+	end	
+}
+
 
 return frame
