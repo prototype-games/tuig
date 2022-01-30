@@ -14,8 +14,14 @@ function a()
 	end
 	function dir:init(scene)
 		local res = {name=dir.name, wasd={}}
+	
 		return res
 	end
+	function dir:print (actor, line, scene)
+			pprint(actor)
+			pprint(line)
+			pprint(scene)
+		end
 	return dir
 end
 return a()

@@ -65,14 +65,11 @@ frame["wait_for_signal"] = {
 	end	
 }
 
-frame["data_to_actor"] = {
-	update=function(line, dt, object, lines)
-		LINE_HANDLERS[line.alt_line.name].update(line.alt_line, dt, object, lines)
-	 	return dt
+frame["data_to_director"] = {
+	update=function(line, dt, actor, lines)
+		lib.framework.cues.data_to_director(actor, line, line.scene)
+ 		return dt
 	end,
-	draw=function(line, object)
-		LINE_HANDLERS[line.alt_line.name].draw(line.alt_line, object)
-	end	
 }
 
 

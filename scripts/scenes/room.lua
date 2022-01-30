@@ -26,6 +26,11 @@ function scene.init(scene_collection, name)
 					name="base.wait_for_signal",
 					 signal="test",
 					 alt_line={name="base.idle"}
+					},
+					{
+						name="base.data_to_director",
+						director_name="reset_director",
+						function_name="print"
 					}
 		},
 		BOUNCING =	{
