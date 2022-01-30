@@ -32,6 +32,7 @@ local function emit_waitfor(scene, actor, signal_name)
 		end
 	end
 end
+
 return {execute_cue=execute_cue,
 	 get_actor_by_name=get_actor_by_name,
 	 data_to_director=data_to_director,
