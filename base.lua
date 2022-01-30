@@ -1,3 +1,4 @@
+local actor_fw = lib.framework.actors
 LINE_HANDLERS = {add=function(name, start, update, draw)
 	LINE_HANDLERS[name]={start=start,update=update, draw=draw}
 end 
@@ -19,13 +20,12 @@ function loveHug(name, scene_collection, skip_lines_if_any_director_successful)
 		if should_return and skip_lines_if_any_director_successful then
 			return 
 		end
-	for actor,_ in pairs(current_scene.objects) do
-		local line, _ = actor_fw.get_line(current_scene, actor)
+		for actor,_ in pairs(current_scene.objects) do
+			local line, _ = actor_fw.get_line(current_scene, actor)
 
-		if LINE_HANDLERS[line.name][name] then
-			LINE_HANDLERS[line.name][name](line,actor, ...)
+			if LINE_HANDLERS[line.name][name] then
+				LINE_HANDLERS[line.name][name](line,actor, ...)
+			end
 		end
-	end
-		
 	end
 end

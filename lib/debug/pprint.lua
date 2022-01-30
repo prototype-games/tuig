@@ -1,6 +1,6 @@
 return function(a)
     print("-------------------")
     print(a)
-    print(require 'lib.inspect'(a))
+    print(lib.debug.inspect(a))
     print("-------------------")
 end

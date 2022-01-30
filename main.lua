@@ -1,28 +1,31 @@
-local directors = require "lib.framework.directors"
-local scene_collection = require "lib.framework.scene"
-local objs = require "lib.framework.object"
-local bitser = require 'lib.bitser'
-actor_fw= require "lib.framework.actors"
-lines_loader = require "lib.framework.lines"
-cues_loader = require "lib.framework.cues"
-require "base"
-require 'lib.load_all_scripts'
-pprint = require "lib.pprint"
+-- local directors = require "lib.framework.directors"
+-- local objs = require "lib.framework.object"
+-- actor_fw= require "lib.framework.actors"
 
-AFW = scene_collection()
+require 'lib.load_all_scripts'
+
+require "base"
+pprint = lib.debug.pprint
+lines_loader = lib.framework.lines
+cues_loader = lib.framework.cues
+
+AFW = lib.framework.scene()
 
 
 function love.load()
 	lines_loader.get_lines(scripts.linereaders, "")
-	directors:all_directors(scripts.directors, "")
+	lib.framework.directors:all_directors(scripts.directors, "")
 	AFW:add_all_scenes()
 	AFW.current_scene = "room"
-	bitser.dumpLoveFile("savepoint.dat", AFW.SCENES)
-	AFW.SCENES = bitser.loadLoveFile("savepoint.dat")
+
+	pprint(lib)
+	lib.bitser.bitser.dumpLoveFile("savepoint.dat", AFW.SCENES)
+	AFW.SCENES = lib.bitser.bitser.loadLoveFile("savepoint.dat")
 end
 
 
 function love.update(dt)
+	local actor_fw = lib.framework.actors
 	for k,v in pairs(AFW:get_current_scene().directors)do
 		if  DIRECTORS[k].update then
 			DIRECTORS[k].update(v, dt, AFW:get_current_scene(), AFW)
