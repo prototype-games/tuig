@@ -1,4 +1,4 @@
-function update(line, dt, object)
+local function update(line, dt, object)
 	local xs = (line.x - object.x)
 	local ys = (line.y - object.y)
 	local len = math.sqrt(xs*xs + ys*ys)
@@ -13,7 +13,7 @@ function update(line, dt, object)
 	return 0
 end
 
-start = function(line)
+local start = function(line)
 	line.remaining_time = line.duration
 end
 

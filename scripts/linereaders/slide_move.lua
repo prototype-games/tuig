@@ -1,4 +1,4 @@
-function update(line, dt, object)
+local function update(line, dt, object)
 	local ddt = (dt / line.remaining_time)
 	local addt = 1 - ddt
 	if addt < 0 then
@@ -16,11 +16,9 @@ function update(line, dt, object)
 	return 0
 end
 
-start = function(line)
+local start = function(line)
 	line.remaining_time = line.duration
 end
 
-finish = function(line)
 
-end
 return {start=start, update=update}
