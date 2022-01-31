@@ -21,7 +21,6 @@ function love.load()
 	pprint(lib)
 	lib.bitser.bitser.dumpLoveFile("savepoint.dat", AFW.SCENES)
 	AFW.SCENES = lib.bitser.bitser.loadLoveFile("savepoint.dat")
-	pprint(lib.framework.render.sort({{key=4},{key=2},{key=4}, {key={3,4}}, {key={3,4,5}}, {key={3,2}}, {key={3,4}}, {key={3,6}}}))
 
 end
 

@@ -16,7 +16,7 @@ end
 
 return function(line, actor)
 	return {
-		key = renderer.get_priority(line, actor),
+		priority = renderer.get_priority(line, actor),
 		draw = function() renderer.draw(line, actor) end
 	}
 end
