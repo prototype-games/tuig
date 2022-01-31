@@ -58,13 +58,17 @@ end
 
 function love.draw()
 		local actor_fw = lib.framework.actors
-
+		local renderers = {}
 		for actor,_ in pairs(AFW:get_current_scene().objects) do
 			local line, _ = actor_fw.get_line(AFW:get_current_scene(), actor)
 
-			if LINE_HANDLERS[line.name].draw then
-				LINE_HANDLERS[line.name].draw(line,actor)
+			if actor.costume then
+				renderers[#renderers+1] = scripts.renderers[actor.costume.renderer](line,actor)
 			end
+		end
+		lib.framework.render.sort(renderers)
+		for _,renderer in ipairs(renderers) do
+			renderer.draw()
 		end
 end
 

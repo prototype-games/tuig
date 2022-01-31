@@ -2,6 +2,7 @@ local a  = {}
 a.name="other_circle"
 a.sprite = "circ"
 a.renderer = "circ"
+a.costume={renderer="circle", size=55}
 a.x = 0
 a.y = 0
 function a:init(new_obj)
