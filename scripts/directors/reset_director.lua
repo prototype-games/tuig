@@ -17,7 +17,7 @@ function a()
 	
 		return res
 	end
-	function dir:print (actor, line, scene)
+	function dir:print  (actor, line, scene)
 			pprint(actor)
 			pprint(line)
 			pprint(scene)

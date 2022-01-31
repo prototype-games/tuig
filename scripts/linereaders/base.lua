@@ -23,7 +23,7 @@ frame["idle"] ={start=function(line, _ , _)
 	 			local return_value = dt - line.remaining_time
  				line.remaining_time = line.duration
  				print("BOINC")
-	 			return return_value
+				return return_value
 	 		end
 
 	 		line.remaining_time = line.remaining_time - dt
@@ -56,6 +56,5 @@ frame["data_to_director"] = {
  		return dt
 	end,
 }
-
 
 return frame

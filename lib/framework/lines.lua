@@ -40,7 +40,6 @@ function lines.add_to_lineset_or_push(lines_input, lineset_name, lineset, merge_
 		matched = str
 		break
 	end
-	print(matched)
 	for _, v in pairs(merge_into) do
 		if v == matched then
 			print("Add to back")
@@ -77,10 +76,7 @@ function lines.clear_merge_into_and_push(lines_input, lineset_name, lineset, mer
 		end
 
 		if not is_match then
-			print(lines_input.current[counter])
 			reset=counter
-		else
-			print("Y",lines_input.current[counter])
 		end
 		counter = counter + 1
 	end

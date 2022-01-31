@@ -19,10 +19,8 @@ end
 start = function(line)
 	line.remaining_time = line.duration
 end
-draw = function(line, object)
-	love.graphics.circle("fill", object.x,object.y, 50)
-end
+
 finish = function(line)
 
 end
-return {start=start, update=update, draw=draw}
+return {start=start, update=update}
