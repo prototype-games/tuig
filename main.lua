@@ -56,7 +56,18 @@ function love.update(dt)
 	end
 end	
 
-loveHug("draw", AFW, true)
+function love.draw()
+		local actor_fw = lib.framework.actors
+
+		for actor,_ in pairs(AFW:get_current_scene().objects) do
+			local line, _ = actor_fw.get_line(AFW:get_current_scene(), actor)
+
+			if LINE_HANDLERS[line.name].draw then
+				LINE_HANDLERS[line.name].draw(line,actor)
+			end
+		end
+end
+
 loveHug("keypressed", AFW)
 loveHug("keyreleased", AFW)
 loveHug("mousemoved", AFW)
