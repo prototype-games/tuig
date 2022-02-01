@@ -21,7 +21,6 @@ function love.load()
 	pprint(lib)
 	lib.bitser.bitser.dumpLoveFile("savepoint.dat", AFW.SCENES)
 	AFW.SCENES = lib.bitser.bitser.loadLoveFile("savepoint.dat")
-
 end
 
 
@@ -62,7 +61,7 @@ function love.draw()
 			local line, _ = actor_fw.get_line(AFW:get_current_scene(), actor)
 
 			if actor.costume then
-				renderers[#renderers+1] = scripts.renderers[actor.costume.renderer](line,actor)
+				renderers[#renderers+1] = scripts.renderers.actors[actor.costume.renderer](line,actor)
 			end
 		end
 		lib.framework.render.sort(renderers)
