@@ -1,6 +1,6 @@
 local renderer = {}
 function renderer.get_priority(line, actor, base_level)
-	return {base_level,actor.z} or {base_level,1}
+	return {base_level or 4,actor.z or 1}
 end
 function renderer.draw(line, actor)
 	if line.name=="base.idle" then

@@ -42,7 +42,6 @@ function lines.add_to_lineset_or_push(lines_input, lineset_name, lineset, merge_
 	end
 	for _, v in pairs(merge_into) do
 		if v == matched then
-			print("Add to back")
 			for _, line in ipairs(lineset) do
 				lines_input[a][#lines_input[a]+1] = line
 			end

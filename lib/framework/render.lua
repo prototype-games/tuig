@@ -13,11 +13,8 @@ function render.sorting_key(a,b)
 				end
 				counter = counter +  1
 			end
-			if b.priority[counter] == nil then
-				return true
-			else
-				return false
-			end
+			return a.priority[counter-1] < b.priority[counter-1]
+
 		end
 		return a.priority[1] < b.priority	
 	end

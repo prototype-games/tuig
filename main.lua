@@ -52,6 +52,8 @@ function love.update(dt)
 end	
 
 function love.draw()
+
+	if AFW:get_current_scene() then end
 		local actor_fw = lib.framework.actors
 		local renderers = {}
 		for actor,_ in pairs(AFW:get_current_scene().objects) do
