@@ -71,7 +71,6 @@ local scene_collection = function()
 		for k,v in pairs(obj) do
 			if type(v) == "table" then
 				if v.scene then
-					-- print(prefix..k)
 					scene_collection:new_scene(prefix..k)
 					v.init(scene_collection, prefix..k)
 				else

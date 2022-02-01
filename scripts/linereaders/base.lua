@@ -1,6 +1,5 @@
 local frame = {}
 frame["set_counter"] = {start=function(line, lines, actor)
-		pprint(line)
 		lines["current_line"] = line["counter"]
 
 		if lines[lines.current_line] and LINE_HANDLERS[lines[lines.current_line].name].start then
@@ -22,7 +21,6 @@ frame["idle"] ={start=function(line, _ , _)
 	 		if dt >= line.remaining_time then
 	 			local return_value = dt - line.remaining_time
  				line.remaining_time = line.duration
- 				print("BOINC")
 				return return_value
 	 		end
 

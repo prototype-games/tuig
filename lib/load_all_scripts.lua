@@ -39,11 +39,11 @@ local function recursiveEnumerate(obj, folder, fileTree, first)
     local filesTable = lfs.getDirectoryItems(folder)
     for i, v in ipairs(filesTable) do
         local file = folder .. "/" .. v
-        if lfs.isFile(file) and not first then
-            print(file)
+        local info = lfs.getInfo(file)
+        if info.type=="file" and not first then
             fileTree = fileTree .. "\n" .. string.gsub(string.gsub(file, "/", "."), ".lua", "")
             load_script(obj, string.gsub(string.gsub(file, "/", "."), ".lua", ""))
-        elseif lfs.isDirectory(file) then
+        elseif info.type =="directory" then
             fileTree = recursiveEnumerate(obj, file, fileTree, false)
         end
     end
@@ -56,27 +56,13 @@ local rl = function()
 end
 RELOADALL = function()
     un_require()
-    print(" GAME LOGIC RESET")
-    local directors = require "lib.framework.directors"
-    local scene_collection = require "lib.framework.scene"
-    local objs = require "lib.framework.object"
-    local bitser = require 'lib.bitser'
-    local lines_loader = require"lib.framework.lines"
-    local cues_loader = require"lib.framework.cues"
     rl()
-    lines_loader(scripts.lines, "")
-    cues_loader(scripts.cues, "")
     DIRECTORS = {}
-    directors:all_directors(scripts.directors, "")
-    for k,v in pairs(DIRECTORS) do
-        print(k,v)
-    end
+    lib.framework.directors:all_directors(scripts.directors, "")
 end
 rl()
 
 function duplicate(obj)
-    print(obj)
-
     if type(obj) ~= "table" then
         return obj
     end

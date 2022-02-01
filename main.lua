@@ -17,8 +17,6 @@ function love.load()
 	lib.framework.directors:all_directors(scripts.directors, "")
 	AFW:add_all_scenes()
 	AFW.current_scene = "room"
-
-	pprint(lib)
 	lib.bitser.bitser.dumpLoveFile("savepoint.dat", AFW.SCENES)
 	AFW.SCENES = lib.bitser.bitser.loadLoveFile("savepoint.dat")
 end
@@ -48,7 +46,6 @@ function love.update(dt)
 				if LINE_HANDLERS[line.name].start then
 					LINE_HANDLERS[line.name].start(line, current_scene.lines[actor], actor)
 				end	
-				-- INCREMENT_LINE_THINGY
 			end
 		end
 	end
