@@ -50,6 +50,9 @@ function scene.init(scene_collection, name)
 	})
 
 
+	local map  = lib.framework.resources.tiled.load("resources/maps/town/init.lua", "room_map", 4)
+	my_scene.tiled="room_map"
+	my_scene.tiled_priorty = 5
 
 	scene_collection:add_director(name,"dierector")
 	scene_collection:add_director(name,"reset_director")
