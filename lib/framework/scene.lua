@@ -34,8 +34,9 @@ local scene_collection = function()
 		add_obj(scene, scene_name, actor)
 	end
 	function add_director(scenes, scene, director_name)
+		print(scene)
 		local director = DIRECTORS[director_name]
-		scenes.SCENES[scene].directors[director.name] = director.init()
+		scenes.SCENES[scene].directors[director.name] = director.init(scenes.SCENES[scene])
 	end
 	function whereis(scenes, actor)
 		return scenes.phonebook[actor]

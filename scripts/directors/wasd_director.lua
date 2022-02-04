@@ -4,7 +4,7 @@ function a()
 	function dir:update(dt, scene, scene_collection)
 		for _,v in pairs(scene.objects)  do
 			line, _ =  lib.framework.actors.get_line(scene, v)
-			if not line.interrupt then
+			if line and not line.interrupt then
 				return
 			end
 		end

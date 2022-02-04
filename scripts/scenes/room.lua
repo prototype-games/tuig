@@ -28,10 +28,13 @@ function scene.init(scene_collection, name)
 
 	scene_collection:add_director(name,"wasd_director")
 	-- scene.load_resources(name)
+	scene.load_resources (name)
 	i =  i+1
 end
 function scene.load_resources (name) 
-	local map  = lib.framework.resources.tiled.load("resources/maps/map2/test.lua", name.."_map",3, AFW.SCENES[name], has_loaded_before)
+	local map  = lib.framework.resources.tiled.load("resources/maps/map2/test.lua", name.."_map",3, AFW.SCENES[name])
+	AFW:add_director(name,"tiled_simple_stopper")
+
 	has_loaded_before = true
 end
 function scene.unload_resources (name) 
