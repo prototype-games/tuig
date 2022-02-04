@@ -19,12 +19,10 @@ function love.load()
 	AFW.current_scene = "room"
 	lib.bitser.bitser.dumpLoveFile("savepoint.dat", AFW.SCENES)
 	AFW.SCENES = lib.bitser.bitser.loadLoveFile("savepoint.dat")
-	
 end
 
 
 function love.update(dt)
-	
 	local actor_fw = lib.framework.actors
 
 	local current_scene=AFW:get_current_scene()
@@ -48,6 +46,7 @@ function love.update(dt)
 		end
 	end
 
+
 	for k,v in pairs(AFW:get_current_scene().directors)do
 		if  DIRECTORS[k].update then
 			DIRECTORS[k].update(v, dt, AFW:get_current_scene(), AFW)
@@ -55,8 +54,8 @@ function love.update(dt)
 	end
 end	
 
-function love.draw()
-	
+
+function love.draw()	
 	local scene = AFW:get_current_scene()
 	local circle, _ = AFW.get_actor_by_name("circle2")[1].actor
 	local actor_fw = lib.framework.actors
