@@ -5,16 +5,11 @@ function scene.init(scene_collection, name)
 	
 	-- Circle actor is the best actor ever
 	-- he never disobeys his director
-	circle_actor = scene_collection.add_actor(scene_collection, name, duplicate_actor(scripts.actors.circle.constr))
-	local circle_actor2 = scene_collection.add_actor(scene_collection, name, duplicate_actor(scripts.actors.other_circle.constr))
+	circle_actor = scene_collection.add_actor(scene_collection, name, scripts.actors.circle.constr())
+
 
 	local my_scene = scene_collection.SCENES[name]
 
-	lines_loader.add_lineset(my_scene , circle_actor2,	
-		{
-			IDLE={{name="base.idle"}, current_line=1, interrupt=true},
-			current={"IDLE"}
-		})
 
 
 	circle_actor.x = 400
@@ -39,7 +34,7 @@ function scene.init(scene_collection, name)
 			{name="slide_move", x=400, y=400, duration=1, interrupt=true},
 			{name="base.set_counter", counter=1},
 		},
-		APPLAUD = {
+		["room.APPLAUD"] = {
 			{name="base.idle", duration=4},
 			current_line=1
 		},
@@ -50,7 +45,7 @@ function scene.init(scene_collection, name)
 	})
 
 
-	local map  = lib.framework.resources.tiled.load("resources/maps/town/init.lua", "room_map", 4)
+	local map  = lib.framework.resources.tiled.load("resources/maps/map2/test.lua", "room_map", 2, my_scene)
 	my_scene.tiled="room_map"
 	my_scene.tiled_priorty = 5
 

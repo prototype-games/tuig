@@ -2,11 +2,16 @@ local actors = {}
 
 
 function actors.get_line(scene, actor)
-	
 	local linesets = scene.lines[actor]
 	local current_lineset = linesets.current[#linesets.current]
 	
 	local lines =  scene.lines[actor][current_lineset]
+	if not lines and actor.lines then
+		lines = actor.lines[current_lineset]
+	end
+	if not lines then
+		return
+	end
 	if not lines.current_line then
 		lines.current_line = 1
 	end

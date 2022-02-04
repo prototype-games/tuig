@@ -6,11 +6,18 @@ local scene_collection = function()
 		scene.pipeline = {}
 		return scene
 	end
-
+	function add_actor_direct_from_scene(scene, actor)
+		print(actor)
+		AFW.phonebook[actor] = {scene=scene, actor=actor}
+		scene.objects[actor] = actor
+		scene.lines[actor] ={current={"IDLE"}}
+		return actor
+	end
 	function add_actor(scene, scene_name, actor)
+		print(actor)
 		scene.phonebook[actor] = {scene=scene.SCENES[scene_name]}
 		scene.SCENES[scene_name].objects[actor] = actor
-		scene.SCENES[scene_name].lines[actor] = {current_line=0}
+		scene.SCENES[scene_name].lines[actor] = {current={"IDLE"}}
 		return actor
 	end
 	function get_scene(obj, scene_name)
@@ -64,7 +71,8 @@ local scene_collection = function()
 		  get_current_scene=get_current_scene,
 		   move_actor_to_scene=move_actor_to_scene,
 		    add_director=add_director,
-		    whereis=whereis
+		    whereis=whereis,
+		    add_actor_direct_from_scene=add_actor_direct_from_scene
 		}
 
 	function add_all_for(scene_collection, obj, prefix)

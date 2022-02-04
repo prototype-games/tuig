@@ -1,12 +1,13 @@
 local a  = {}
-a.name="circle2"
-a.sprite = "circ"
-a.renderer = "circ"
-a.costume={renderer="circle", size=16}
-a.x = 0
-a.y = 0
-function a:init(new_obj)
+
+function a:init()
+	local new_obj = {}
+	new_obj.name="circle2"
+	new_obj.sprite = "circ"
+	new_obj.renderer = "circ"
+	new_obj.costume={renderer="circle", size=8}
 	new_obj.x = 404
 	new_obj.y = 404
+	return new_obj
 end
-return a
+return a.init

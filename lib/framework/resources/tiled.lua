@@ -1,9 +1,13 @@
 local tiled = {}
 local maps = {}
-function tiled.load(path, map_name, scene, prio)
+function tiled.load(path, map_name, prio, scene)
 	local map = lib.sti.init(path)
 	maps[map_name] = map
-
+	for _, object in pairs(map.objects) do
+		pprint(object)
+		pprint(object.properties)
+		AFW.add_actor_direct_from_scene(scene, lib.helpers.path_index(scripts.actors, object.properties["Constructor"])(object.x,object.y))
+	end
 	map:addCustomLayer("Player Layer", prio)
 	local spriteLayer = map.layers["Player Layer"]
 		function spriteLayer:draw()
@@ -11,7 +15,7 @@ function tiled.load(path, map_name, scene, prio)
 				-- if AFW:get_current_scene() then end
 				local actor_fw = lib.framework.actors
 				local renderers = {}
-				
+
 				for actor,_ in pairs(scene.objects) do
 					if actor.costume then
 						local line, _ = actor_fw.get_line(scene, actor)
@@ -26,6 +30,7 @@ function tiled.load(path, map_name, scene, prio)
 			lib.framework.render.sort(renderers)
 			local tiled_drawn = false
 			for _, renderer in ipairs(renderers) do
+				print("DRAW")
 						renderer.draw()
 			end
 	end

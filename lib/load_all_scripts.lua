@@ -73,7 +73,7 @@ function duplicate(obj)
     return a
 end
 
-function duplicate_actor(obj)
+function initiate_actor(obj)
     local a = duplicate(obj)
     if obj.init and type(obj.init) == "function" then
         a.init=nil
