@@ -1,5 +1,5 @@
 local scene = {}
-
+local has_loaded_before = false
 function scene.init(scene_collection, name)
 	local i =0
 	
@@ -16,36 +16,10 @@ function scene.init(scene_collection, name)
 	circle_actor.y = 200
 	lines_loader.add_lineset(my_scene , circle_actor,  
 	{
-		WAIT_FOR={
-					{
-					name="base.wait_for_signal",
-					 signal="test",
-					 alt_line={name="base.idle"}
-					},
-					{
-						name="base.data_to_director",
-						director_name="reset_director",
-						function_name="print"
-					}
-		},
-		BOUNCING =	{
-			{name="slide_move", x=0, y=400, duration=1, interrupt=true},
-
-			{name="slide_move", x=400, y=400, duration=1, interrupt=true},
-			{name="base.set_counter", counter=1},
-		},
-		["room.APPLAUD"] = {
-			{name="base.idle", duration=4},
-			current_line=1
-		},
-		IDLE= {
-			{name="base.idle", interrupt=true}
-		},
-		current={"IDLE"}
+	current={"IDLE"}
 	})
 
 
-	local map  = lib.framework.resources.tiled.load("resources/maps/map2/test.lua", "room_map", 2, my_scene)
 	my_scene.tiled="room_map"
 	my_scene.tiled_priorty = 5
 
@@ -53,7 +27,15 @@ function scene.init(scene_collection, name)
 	scene_collection:add_director(name,"reset_director")
 
 	scene_collection:add_director(name,"wasd_director")
+	-- scene.load_resources(name)
 	i =  i+1
+end
+function scene.load_resources (name) 
+	local map  = lib.framework.resources.tiled.load("resources/maps/map2/test.lua", name.."_map", 2, AFW.SCENES[name], has_loaded_before)
+	has_loaded_before = true
+end
+function scene.unload_resources (name) 
+	local map  = lib.framework.resources.tiled.unload(name.."_map")
 end
 scene.scene=true
 return scene

@@ -9,7 +9,7 @@ function a.init(x,y)
 	new_obj.x = x
 	new_obj.y = y
 	new_obj.lines = {
-			IDLE={{name="base.idle"}, current_line=1, interrupt=true},
+			IDLE={{name="base.idle",  interrupt=true}, current_line=1},
 			current={"IDLE"}
 		}
 	return new_obj

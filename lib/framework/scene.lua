@@ -1,4 +1,5 @@
 local directors = require "lib.framework.directors"
+local scene_resource_functions = {}
 local scene_collection = function()
 	function new_scene(obj,scene_name)
 		local scene = {name=scene_name, objects={}, lines={}, directors={}}
@@ -81,6 +82,7 @@ local scene_collection = function()
 				if v.scene then
 					scene_collection:new_scene(prefix..k)
 					v.init(scene_collection, prefix..k)
+					scene_resource_functions[prefix..k] = v
 				else
 					add_all_for(scene_collection, v, prefix..k..".")
 				end
@@ -90,9 +92,14 @@ local scene_collection = function()
 	o.add_all_scenes = function(scene_collection)
 		scene_collection:new_scene("NOROOM")
 		add_all_for(scene_collection, scripts.scenes, "")
+	end
+	o.enter_scene = function(scene_name)
+		scene_resource_functions[scene_name].load_resources(scene_name)
 
 	end
-	
+	o.leave_scene = function(scene_name)
+		scene_resource_functions[scene_name].unload_resources(scene_name)
+	end
 	o.phonebook = {}
 
 	return o

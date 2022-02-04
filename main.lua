@@ -17,6 +17,7 @@ function love.load()
 	lib.framework.directors:all_directors(scripts.directors, "")
 	AFW:add_all_scenes()
 	AFW.current_scene = "room"
+	AFW.enter_scene("room")
 	lib.bitser.bitser.dumpLoveFile("savepoint.dat", AFW.SCENES)
 	AFW.SCENES = lib.bitser.bitser.loadLoveFile("savepoint.dat")
 end

@@ -8,6 +8,9 @@ function a:init()
 	new_obj.costume={renderer="circle", size=8}
 	new_obj.x = 404
 	new_obj.y = 404
+	new_obj.lines={	IDLE= {
+			{name="base.idle", interrupt=true}
+		}}
 	return new_obj
 end
 return a.init

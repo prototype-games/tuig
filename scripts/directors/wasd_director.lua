@@ -2,8 +2,9 @@ function a()
 	local dir = {name="wasd"}
 	local should_wait_until_finished_walking = false
 	function dir:update(dt, scene, scene_collection)
-		for k,v in  pairs(scene.lines) do
-			if #v >0 and v.current_line <= #v and not v[v.current_line].interrupt then
+		for _,v in pairs(scene.objects)  do
+			line, _ =  lib.framework.actors.get_line(scene, v)
+			if not line.interrupt then
 				return
 			end
 		end
@@ -30,8 +31,9 @@ function a()
 		end
 	end
 	function dir:mousepressed(dt, scene, scene_collection, x,y, btn)
-		for k,v in  pairs(scene.lines) do
-			if #v >0 and v.current_line <= #v and not v[v.current_line].interrupt then
+		for _,v in pairs(scene.objects)  do
+			line, _ =  lib.framework.actors.get_line(scene, v)
+			if not line.interrupt then
 				return
 			end
 		end
