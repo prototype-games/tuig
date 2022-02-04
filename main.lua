@@ -52,14 +52,12 @@ function love.update(dt)
 end	
 
 function love.draw()
-
 	if AFW:get_current_scene() then end
 		local actor_fw = lib.framework.actors
 		local renderers = {}
 		for actor,_ in pairs(AFW:get_current_scene().objects) do
-			local line, _ = actor_fw.get_line(AFW:get_current_scene(), actor)
-
 			if actor.costume then
+				local line, _ = actor_fw.get_line(AFW:get_current_scene(), actor)
 				renderers[#renderers+1] = scripts.renderers.actors[actor.costume.renderer](line,actor)
 			end
 		end
