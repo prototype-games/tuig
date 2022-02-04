@@ -18,14 +18,7 @@ function lines.get_lineset_name(lineset_name)
 	return lineset_name .."#".. tostring(COUNTER)
 end
 
-function lines.push_to_lines(lines_input, lineset_name, lineset, pop_depth)
-	if pop_depth ~= nil then
-		for k,v in pairs(lines_input.current) do
-			if k > pop_depth then
-				lines_input.current[k] = nil
-			end
-		end
-	end
+function lines.push_to_lines(lines_input, lineset_name, lineset)
 	local UUID_lineset_name = lines.get_lineset_name(lineset_name)
 	lines_input.current[#lines_input.current+1] = UUID_lineset_name
 	lines_input[UUID_lineset_name] = lineset

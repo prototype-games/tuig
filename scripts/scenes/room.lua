@@ -5,7 +5,7 @@ function scene.init(scene_collection, name)
 	
 	-- Circle actor is the best actor ever
 	-- he never disobeys his director
-	local circle_actor = scene_collection.add_actor(scene_collection, name, duplicate_actor(scripts.actors.circle.constr))
+	circle_actor = scene_collection.add_actor(scene_collection, name, duplicate_actor(scripts.actors.circle.constr))
 	local circle_actor2 = scene_collection.add_actor(scene_collection, name, duplicate_actor(scripts.actors.other_circle.constr))
 
 	local my_scene = scene_collection.SCENES[name]
@@ -46,7 +46,7 @@ function scene.init(scene_collection, name)
 		IDLE= {
 			{name="base.idle", interrupt=true}
 		},
-		current={"IDLE", "BOUNCING", "WAIT_FOR"}
+		current={"IDLE"}
 	})
 
 

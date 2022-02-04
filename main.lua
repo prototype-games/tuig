@@ -19,16 +19,32 @@ function love.load()
 	AFW.current_scene = "room"
 	lib.bitser.bitser.dumpLoveFile("savepoint.dat", AFW.SCENES)
 	AFW.SCENES = lib.bitser.bitser.loadLoveFile("savepoint.dat")
+	local sti =require "lib.sti"
+	map = sti("resources/maps/town/init.lua")
+	map:addCustomLayer("Player Layer", 4)
+	local spriteLayer = map.layers["Player Layer"]
+		function spriteLayer:draw()
+			-- if AFW:get_current_scene() then end
+				local actor_fw = lib.framework.actors
+				local renderers = {}
+				for actor,_ in pairs(AFW:get_current_scene().objects) do
+					if actor.costume then
+						local line, _ = actor_fw.get_line(AFW:get_current_scene(), actor)
+						renderers[#renderers+1] = scripts.renderers.actors[actor.costume.renderer](line,actor)
+					end
+				end
+			lib.framework.render.sort(renderers)
+			for _,renderer in ipairs(renderers) do
+				renderer.draw()
+			end
+	end
 end
 
 
 function love.update(dt)
+	map:update(dt)
 	local actor_fw = lib.framework.actors
-	for k,v in pairs(AFW:get_current_scene().directors)do
-		if  DIRECTORS[k].update then
-			DIRECTORS[k].update(v, dt, AFW:get_current_scene(), AFW)
-		end
-	end
+
 	local current_scene=AFW:get_current_scene()
 	for actor,_ in pairs(current_scene.objects) do
 		local time_left = dt
@@ -49,22 +65,17 @@ function love.update(dt)
 			end
 		end
 	end
+	
+	for k,v in pairs(AFW:get_current_scene().directors)do
+		if  DIRECTORS[k].update then
+			DIRECTORS[k].update(v, dt, AFW:get_current_scene(), AFW)
+		end
+	end
 end	
 
 function love.draw()
-	if AFW:get_current_scene() then end
-		local actor_fw = lib.framework.actors
-		local renderers = {}
-		for actor,_ in pairs(AFW:get_current_scene().objects) do
-			if actor.costume then
-				local line, _ = actor_fw.get_line(AFW:get_current_scene(), actor)
-				renderers[#renderers+1] = scripts.renderers.actors[actor.costume.renderer](line,actor)
-			end
-		end
-		lib.framework.render.sort(renderers)
-		for _,renderer in ipairs(renderers) do
-			renderer.draw()
-		end
+	local circle, _ = AFW.get_actor_by_name("circle2")[1].actor
+	map:draw(-circle.x+400, -circle.y+400)
 end
 
 loveHug("keypressed", AFW)
