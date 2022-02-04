@@ -1,7 +1,7 @@
 local frame = {}
 function frame.move_relative_cue (scene, actor, x, y,overwrite)
 	local lines = {
-		{name="slide_move_fixed_speed", x=actor.x+x, y=actor.y+y, speed= 100},
+		{name="slide_move_fixed_speed", x=actor.x+x, y=actor.y+y, speed= 100, interrupt=true},
 		{name="base.data_to_director", director_name="wasd_director", function_name="feedback"}
 	}
 	 if not overwrite then
@@ -14,7 +14,7 @@ end
 
 function frame.move_to_coords_cue(scene, actor, x, y,overwrite)
 	local lines = {
-		{name="slide_move_fixed_speed", x=x, y=y, speed= 400},
+		{name="slide_move_fixed_speed", x=x, y=y, speed= 400, interrupt=true},
 		{name="base.data_to_director", director_name="wasd_director", function_name="feedback"}
 	}
 	if not overwrite then

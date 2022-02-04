@@ -3,8 +3,6 @@ local a  = {}
 function a.init(x,y)
 	local new_obj = {}
 	new_obj.name="other_circle"
-	new_obj.sprite = "circ"
-	new_obj.renderer = "circ"
 	new_obj.costume={renderer="circle", size=8}
 	new_obj.x = x
 	new_obj.y = y

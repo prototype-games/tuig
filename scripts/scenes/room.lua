@@ -31,7 +31,7 @@ function scene.init(scene_collection, name)
 	i =  i+1
 end
 function scene.load_resources (name) 
-	local map  = lib.framework.resources.tiled.load("resources/maps/map2/test.lua", name.."_map", 2, AFW.SCENES[name], has_loaded_before)
+	local map  = lib.framework.resources.tiled.load("resources/maps/map2/test.lua", name.."_map",3, AFW.SCENES[name], has_loaded_before)
 	has_loaded_before = true
 end
 function scene.unload_resources (name) 
