@@ -15,20 +15,19 @@ DIRECTORS = {}
 
 function love.load()
 	lib.tuig.directors.all_directors(AFW, scripts.directors, "")
+	lines_loader.get_lines(scripts.linereaders, "")
 
 	AFW = lib.tuig.scene(scenes)
 	AFW:init_all()
 	AFW:load("scenes.room")
 
-
-	vp1=lib.gfx.viewport("vp1",0, 0, 400, 300,1, "scenes.room", 100,100)
-	vp2=lib.gfx.viewport("vp2",400, 0, 400, 300,0.4, "scenes.room", 100,100)
-	vp3=lib.gfx.viewport("vp3",0, 300, 800, 300,0.8, "scenes.room", 100,100)	
+	AFW:enable("scenes.room")
+	vp1=lib.gfx.viewport("vp1",100, 0, 600, 400,1, "scenes.room", 100,100)
+	-- vp3=lib.gfx.viewport("vp3",0, 400, 800, 200,0.8, "scenes.room", 100,100)	
 	UX = lib.gfx.ux_elem("UX",0,0,800,600)
 	UX:add_child(vp1)
-	UX:add_child(vp2)
-	UX:add_child(vp3)
-	UX:add_child(lib.gfx.button("btn",100,100,50,20, function()print("HOI")end))
+	-- UX:add_child(vp3)
+	UX:add_child(lib.gfx.button("btn",100,450,100,40, function()print("HOI")end))
 end
 local x = 0
 
@@ -36,6 +35,7 @@ function love.update(dt)
 	x = x + dt * 20
 	UX:ux_update(dt)
 	scripts.io.bounce.update(dt*UX.game_pace)
+	AFW:update(dt*UX.game_pace)
 end	
 
 function love.draw()	

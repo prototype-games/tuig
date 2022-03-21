@@ -12,10 +12,10 @@ function scene.init(scene_collection, name, my_scene)
 
 	return my_scene
 end
-function scene.load_resources (name, loaded_before) 
+function scene.load_resources (scene_colletion, scene) 
+
 end
-function scene.unload_resources (name) 
-	local map = lib.framework.resources.tiled.unload(name.."_map")
+function scene.unload_resources (scene_colletion, scene) 
 end
 scene.scene = true
 return scene

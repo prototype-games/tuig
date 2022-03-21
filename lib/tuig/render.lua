@@ -45,7 +45,6 @@ function render.render_scene(scene)
 	local tiled_drawn = not scene.tiled_priority
 	for _, renderer in ipairs(renderers) do
 		local first_prio = renderer.priority[1] or renderer.priority
-		print(scene.tiled_priority, first_prio)
 		if  scene.tiled_priority and first_prio > scene.tiled_priority  and not tiled_drawn then
 
 			lib.tuig.resources.tiled.get_map(scene.tiled):draw(100, 100,4,4)

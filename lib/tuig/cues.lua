@@ -1,6 +1,6 @@
 local function get_actor_by_name(name)
 	return function()
-		return AFW.get_actor_by_name(name)
+		return AFW:get_by_actor_name(name)
 	end
 end
 local function execute_cue(filter, cue, ...)

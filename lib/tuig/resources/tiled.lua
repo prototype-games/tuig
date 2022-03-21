@@ -41,10 +41,6 @@ function tiled.load(path, map_name, prio, scene, skip_loading)
 end
 
 function tiled.get_map(map_name)
-
-	for name, _ in pairs(maps) do
-		print(name)
-	end
 	return maps[map_name]
 end
 
