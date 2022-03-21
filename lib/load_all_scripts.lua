@@ -1,19 +1,21 @@
 -- automatically fill scripts variable with userscripts.
 scripts = scripts or {}
 lib = lib or {}
+scenes = scenes or {}
 local lrequirements = {}
 function my_require(str)
     lrequirements[str] = str
     return require(str)
 end
 
-function un_require()
-    for k, v in pairs(lrequirements) do
-        package.loaded[v] = nil    
-    end
+function rerequire(str)
+    package.loaded[str] = nil    
+    lrequirements[str] = str
+
+    return require(str)
 end
 
-local function load_script(obj, url)
+local gobj=function(obj, url)
     local a = obj
     local b = obj
     local last_word = ""
@@ -29,12 +31,18 @@ local function load_script(obj, url)
         end 
         first = false
     end
-
-    b[last_word] = my_require(url)
+    return b, last_word
+end
+local straight_through=function(obj, url)
+    return obj, url
+end
+local function load_script(obj, url, gobber)
+    local b, post_url = gobber(obj, url)
+    print(b)
+    b[post_url] = rerequire(url)
 end
 
-local function recursiveEnumerate(obj, folder, fileTree, first)
-
+local function recursiveEnumerate(obj, folder, fileTree, first, gobber)
     local lfs = love.filesystem
     local filesTable = lfs.getDirectoryItems(folder)
     for i, v in ipairs(filesTable) do
@@ -42,20 +50,21 @@ local function recursiveEnumerate(obj, folder, fileTree, first)
         local info = lfs.getInfo(file)
         if info.type=="file" and not first then
             fileTree = fileTree .. "\n" .. string.gsub(string.gsub(file, "/", "."), ".lua", "")
-            load_script(obj, string.gsub(string.gsub(file, "/", "."), ".lua", ""))
+            print(fileTree)
+            load_script(obj, string.gsub(string.gsub(file, "/", "."), ".lua", ""), gobber)
         elseif info.type =="directory" then
-            fileTree = recursiveEnumerate(obj, file, fileTree, false)
+            fileTree = recursiveEnumerate(obj, file, fileTree, false,  gobber)
         end
     end
     return fileTree
 end
 
 local rl = function()
-    recursiveEnumerate(scripts,"scripts", "", true)
-    recursiveEnumerate(lib,"lib", "", true)
+    recursiveEnumerate(scripts,"scripts", "", false, gobj)
+    recursiveEnumerate(lib,"lib", "", true, gobj)
+    recursiveEnumerate(scenes,"scenes", "", false, straight_through)
 end
 RELOADALL = function()
-    un_require()
     rl()
     DIRECTORS = {}
     lib.framework.directors:all_directors(scripts.directors, "")

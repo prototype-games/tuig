@@ -1,4 +1,4 @@
-local actor_fw = lib.framework.actors
+local actor_fw = lib.tuig.actors
 LINE_HANDLERS = {add=function(name, start, update, draw)
 	LINE_HANDLERS[name]={start=start,update=update, draw=draw}
 end 

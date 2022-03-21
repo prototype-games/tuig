@@ -1,16 +1,10 @@
 function a()
 	local dir = {name="reset_director"}
 	function dir:keypressed(dt, scene, scene_collection, key, scancode, isrepeat)
-		if key == "1" then
+		if key=="f9" then
+			RELOADALL()
 			AFW:add_all_scenes()
-		end
-		if key == "3" then			
-			for _, act in pairs(AFW.get_actor_by_name("circle2")) do
-				lines={{name="warp.to_coordinates", x=400,y=400}}
-				lines_loader.clear_merge_into_and_push(AFW:get_current_scene().lines[act.actor], "warp.to_coordinates", lines, {"move_to_coords_cue", "move_relative_cue", "warp.to_coordinates"})
-				print("WARP")
-			end
-		end
+	end
 	end
 	function dir:init(scene)
 		local res = {name=dir.name, wasd={}}

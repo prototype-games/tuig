@@ -2,12 +2,12 @@ function a()
 	local dir = {name="wasd"}
 	local should_wait_until_finished_walking = false
 	function dir:update(dt, scene, scene_collection)
-		for _,v in pairs(scene.objects)  do
-			line, _ =  lib.framework.actors.get_line(scene, v)
-			if line and not line.interrupt then
-				return
-			end
-		end
+		-- for _,v in pairs(scene.objects)  do
+		-- 	line, _ =  lib.framework.actors.get_line(scene, v)
+		-- 	if line and not line.interrupt then
+		-- 		return
+		-- 	end
+		-- end
 		
 		if love.keyboard.isDown("w") and not should_wait_until_finished_walking  then
 			print("W")

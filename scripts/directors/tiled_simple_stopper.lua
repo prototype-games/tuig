@@ -1,8 +1,28 @@
-local function col_lay_match(col_layer, ax, ay)
-	return (col_layer.data[ay] and col_layer.data[ay][ax])
-				or (col_layer.data[ay] and col_layer.data[ay][ax-1]) 
-				or (col_layer.data[ay+1] and col_layer.data[ay+1][ax])
-				or (col_layer.data[ay+1] and col_layer.data[ay+1][ax-1])
+local function col_lay_match(col_layer, ax, ay, x,y)
+	local lst =  {{ay, ax},
+	 {ay+1, ax},
+	  {ay,ax+1},
+	  {ay+1, ax+1},
+	   {ay-1, ax},
+	   {ay,ax-1},
+	   {ay-1,ax-1},
+	   {ay-1, ax+1},
+	   {ay+1, ax-1}}
+	  
+	 for _, loc in ipairs(lst) do
+	 		if col_layer.data[loc[1]] and col_layer.data[loc[1]][loc[2]] then
+	 			local scx = loc[2]*GRID_SIZE + 0.5*GRID_SIZE
+	 			local scy = loc[1]*GRID_SIZE - 0.5*GRID_SIZE
+
+	 			local dx = math.abs(x - scx)
+	 			local dy = math.abs(y-scy)
+	 			print(dx, dy)
+	 			if dx <= GRID_SIZE  and dy <=GRID_SIZE then
+	 				return true
+	 			end
+	 		end
+	 end
+		return false
 end
 function a()
 	local dir = {name="wasd"}
@@ -15,31 +35,22 @@ function a()
 		local resx = a.x
 		local ax = math.ceil(a.x/16+0.5)
 		local ay = math.floor(a.y/16+0.5)
-		if col_lay_match(col_layer, ax, ay) then	
-			a.x = math.floor(prev.x+0.5)
-			ax = math.ceil(a.x/16+0.5)
-			ay = math.floor(a.y/16+0.5)
-			if col_lay_match(col_layer, ax, ay) then
-			 	a.x = resx
-				a.y = math.floor(prev.y+0.5)
-				ax = math.ceil(a.x/16+0.5)
-				ay = math.floor(a.y/16+0.5)
-				if col_lay_match(col_layer, ax, ay) then
-				 	a.x=math.floor(prev.x+0.5)
+		local not_reset = true
+		if col_lay_match(col_layer, ax, ay,a.x,a.y) then	
+			not_reset = false
+				a.y=math.floor(prev.y+0.5)
+			 	a.x=math.floor(prev.x+0.5)
 					lib.framework.actors.next_line(scene, a)
-	 			end
-			end
 		end
 		local dx = prev.x - a.x
 		local dy = prev.y - a.y
-		if math.sqrt(dx*dx + dy*dy) < 0.01 then
+		if not_reset and math.sqrt(dx*dx + dy*dy) < 0.01 then
 								lib.framework.actors.next_line(scene, a)
 		end
 		prev = {x=a.x, y=a.y}
 	end
 	function dir.init(scene)
-		local res = {name=dir.name, wasd={}}
-	
+		local res = {name=dir.name}
 		return res
 	end
 	return dir

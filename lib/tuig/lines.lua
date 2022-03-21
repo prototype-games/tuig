@@ -28,7 +28,6 @@ end
 -- if the lineset isn't named like one of these: push a new one with the correct name
 function lines.add_to_lineset_or_push(lines_input, lineset_name, lineset, merge_into)
 	local a = lines_input.current[#lines_input.current]
-	pprint(lines_input.current)
 	local matched = ""
 	for str in  a:gmatch("[^#]+") do
 		matched = str

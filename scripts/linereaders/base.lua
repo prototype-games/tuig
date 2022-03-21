@@ -8,7 +8,11 @@ frame["set_counter"] = {start=function(line, lines, actor)
 	end
 }
 
-frame["idle"] ={start=function(line, _ , _)
+frame["idle"] ={start=function(line, actor , _)
+	if actor.x then
+		actor.x = math.floor(actor.x/16)*16
+		actor.y = math.floor(actor.y/16)*16
+	end
 	if line.duration then
 		line.remaining_time = line.duration
 	 	end
