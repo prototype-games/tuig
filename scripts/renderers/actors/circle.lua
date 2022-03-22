@@ -15,10 +15,7 @@ function renderer.draw(line, actor)
 	love.graphics.circle("fill", actor.x,actor.y, actor.costume.size)
 	love.graphics.setColor(1,1,1)
 end
-
-return function(line, actor)
-	return {
-		priority = renderer.get_priority(line, actor),
-		draw = function() renderer.draw(line, actor) end
-	}
+function renderer.spawn(line, actor, base_level)
+	return {line=line, actor=actor, priority=renderer.get_priority(line, actor, base_level), draw=renderer.draw }
 end
+return renderer

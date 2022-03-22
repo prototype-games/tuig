@@ -26,7 +26,7 @@ return function(name, x,y,w,h)
 		if self.parent then
 			self.parent:get_controller_context(name)
 		end
-		print("ERROR")
+		print("ERROR NO CONTEXT")
 		return nil
 	end
 	function ux:set_controller_context(name, value)

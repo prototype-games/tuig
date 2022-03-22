@@ -5,7 +5,7 @@ end
 }
 
 DIRECTORS = {}
-
+RESOURCES = {}
 function loveHug(name, scene_collection, skip_lines_if_any_director_successful)
 	love[name] =  function(...)
 		local should_return = false

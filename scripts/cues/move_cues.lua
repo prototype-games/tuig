@@ -36,4 +36,16 @@ function frame.move_to_coords_cue(scene, actor, x, y,overwrite)
 	end
 end
 
+
+function frame.move_waypoint_to_waypoint(scene, actor, from, to ,overwrite)
+	local lines = {
+		{name="slide_move_waypoint_to_waypoint", from=from, to=to, time=0, speed= 100},
+		{name="base.data_to_director", director_name="wasd_director", function_name="feedback"}
+	}
+	if not overwrite then
+		lines_loader.add_to_lineset_or_push(scene.lines[actor], "slide_move_waypoint_to_waypoint", lines, {"slide_move_waypoint_to_waypoint"})
+	else
+		lines_loader.clear_merge_into_and_push(scene.lines[actor], "slide_move_waypoint_to_waypoint", lines, {"slide_move_waypoint_to_waypoint"})
+	end
+end
 return frame

@@ -12,7 +12,13 @@ cues_loader = lib.tuig.cues
 
 AFW = lib.tuig.scene()
 DIRECTORS = {}
-
+local pause_button = function()
+	if UX.pace > 0 then
+		lib.gfx.pause_screen.pause()
+	else
+		UX:unpause()
+	end
+end
 function love.load()
 	UX = lib.gfx.ux_elem("UX",0,0,800,600)
 	UX.is_controller=true
@@ -28,13 +34,13 @@ function love.load()
 
 	AFW:enable("scenes.room")
 
-	vp1=lib.gfx.viewport("vp1",0, 0, 600, 400,1, "scenes.room", 0,0)
+	vp1=lib.gfx.viewport("vp1",0, 0, 800, 400,1, "scenes.room", 0,0)
 	vp1:add_child(lib.gfx.wayfinding(lib.tuig.wayfinding.move_actor))
 	UX:add_child(vp1)
 	-- UX:add_child(BLACONTROLLER)
 	local hover = love.graphics.newImage("resources/arrow_left_hover.png")
 	local no_hover = love.graphics.newImage("resources/arrow_left_no_hover.png")
-	UX:add_child(lib.gfx.button("btn",100,450,40,40, function()print("HOI")end,no_hover, hover))
+	UX:add_child(lib.gfx.button("btn",100,450,40,40, pause_button, no_hover, hover))
 	UX:add_child(lib.gfx.button("btn",100,500,40,40, function()print("HOI")end,no_hover, hover))
 end
 local x = 0
@@ -50,11 +56,7 @@ function love.draw()
 end
 
 function love.keypressed()
-	if UX.pace > 0 then
-		lib.gfx.pause_screen.pause()
-	else
-		UX:unpause()
-	end
+		pause_button()
 end
 
 function love.mousepressed(x,y,mbt)

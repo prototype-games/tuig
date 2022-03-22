@@ -31,16 +31,17 @@ end
 
 function render.render_scene(scene)
 	local actor_fw = lib.tuig.actors
-	for _, director in pairs(scene.directors) do
-		if DIRECTORS[director.name].draw then
-			DIRECTORS[director.name].draw(scene)
-		end
-	end
+
+
 	local renderers = {}
+
+	for _, render in ipairs(scene.image_render_resources) do
+			renderers[#renderers+1] = scripts.renderers.scenes[render.name].spawn(render.name,scene, render.priority)
+	end
 	for actor,_ in pairs(scene.objects) do
 		if actor.costume then
 			local line, _ = actor_fw.get_line(scene, actor)
-			renderers[#renderers+1] = scripts.renderers.actors[actor.costume.renderer](line,actor)
+			renderers[#renderers+1] = scripts.renderers.actors[actor.costume.renderer].spawn(line,actor,5)
 		end
 	end
 	
@@ -54,7 +55,7 @@ function render.render_scene(scene)
 			tiled_drawn = true
 		end
 		if first_prio ~= scene.tiled_priorty then
-				renderer.draw()
+				renderer.draw(renderer.line, renderer.actor)
 		end
 	end
 	if not tiled_drawn then
@@ -62,6 +63,11 @@ function render.render_scene(scene)
 			lib.tuig.resources.tiled.get_map(scene.tiled):draw(100, 100,4,4)
 		else
 			print("NO MAP")
+		end
+	end
+		for _, director in pairs(scene.directors) do
+		if DIRECTORS[director.name].draw then
+			DIRECTORS[director.name].draw(scene)
 		end
 	end
 end

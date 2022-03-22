@@ -9,7 +9,8 @@ return function(scene_collection)
 	AFW.phonebook = {}
 	function AFW:new_scene(scene_name)
 		local scene = {name=scene_name, objects={}, lines={}, directors={}, named_destinations = {}, 
-		destination_connections = {}
+		destination_connections = {},
+		image_render_resources = {}
 	}
 		self.scenes[scene_name] = scene
 		return scene

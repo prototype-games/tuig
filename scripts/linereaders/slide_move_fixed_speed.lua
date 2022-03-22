@@ -10,10 +10,14 @@ local function update(line, dt, object)
 	end
 	object.x =  object.x + xs/len*dt*line.speed
 	object.y = object.y + ys/len*dt*line.speed
+
+	print(line.timer)
+	line.timer = (line.timer or 0) + dt
 	return 0
 end
 
 local start = function(line)
+	line.timer = 0
 	line.remaining_time = line.duration
 end
 

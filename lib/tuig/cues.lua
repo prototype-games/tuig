@@ -14,7 +14,7 @@ local function execute_cue(scene, actor, cue, ...)
 end
 local function data_to_director(actor, line, scene)
 	if not scene then
-		print("ERROR")
+		print("ERROR with data to director")
 		return
 	else
 		scene = AFW.SCENES[scene]
