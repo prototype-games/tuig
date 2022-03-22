@@ -26,7 +26,7 @@ end
 
 function frame.move_to_coords_cue(scene, actor, x, y,overwrite)
 	local lines = {
-		{name="slide_move_fixed_speed", x=x, y=y, speed= 400},
+		{name="slide_move_fixed_speed", x=x, y=y, speed= 100},
 		{name="base.data_to_director", director_name="wasd_director", function_name="feedback"}
 	}
 	if not overwrite then

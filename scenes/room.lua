@@ -1,15 +1,20 @@
 local scene = {}
+-- Resets has some options
+-- never: only load state when game starts
+-- enter: whenever the room gets loaded
+scene.resets="never"
 function scene.init(scene_collection, name, my_scene)
-	-- Circle actor is the best actor ever
-	-- he never disobeys his director
-	my_scene.tiled = name.."_map"
-	my_scene.tiled_priority = 5
-	
-	scene_collection:add_director(name,"reset_director")
-	scene_collection:add_director(name,"wasd_director")
-	AFW:add_actor(my_scene,scripts.actors.circle.constr(4,5))
-	local map  = lib.tuig.resources.tiled.load("resources/maps/map2/test.lua", name.."_map",3, my_scene,loaded_before)
+	local mc = scripts.actors.mc.constr(4,5)
+	scene_collection:add_actor(my_scene,mc)
+	UX:set_controller_context("player", mc)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "home_destination", 50,50,30)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "home_destination2", 450,50,30)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "home_destination3", 50,250,30)
 
+	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination", "home_destination2", "walk", true)
+	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination3", "home_destination2", "walk", true)
+	lib.tuig.wayfinding.teleportTo(my_scene,mc,"home_destination")
+	scene_collection:add_director(my_scene, "wayfinding_debug_director")
 	return my_scene
 end
 function scene.load_resources (scene_colletion, scene) 
@@ -18,4 +23,4 @@ end
 function scene.unload_resources (scene_colletion, scene) 
 end
 scene.scene = true
-return scene
+return scene 

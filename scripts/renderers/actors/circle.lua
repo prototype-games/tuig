@@ -9,6 +9,8 @@ function renderer.draw(line, actor)
 		else
 			love.graphics.setColor(0,1,0)
 		end
+	else
+		love.graphics.setColor(1,1,0)
 	end
 	love.graphics.circle("fill", actor.x,actor.y, actor.costume.size)
 	love.graphics.setColor(1,1,1)

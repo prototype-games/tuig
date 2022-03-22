@@ -31,7 +31,11 @@ end
 
 function render.render_scene(scene)
 	local actor_fw = lib.tuig.actors
-
+	for _, director in pairs(scene.directors) do
+		if DIRECTORS[director.name].draw then
+			DIRECTORS[director.name].draw(scene)
+		end
+	end
 	local renderers = {}
 	for actor,_ in pairs(scene.objects) do
 		if actor.costume then
@@ -46,7 +50,6 @@ function render.render_scene(scene)
 	for _, renderer in ipairs(renderers) do
 		local first_prio = renderer.priority[1] or renderer.priority
 		if  scene.tiled_priority and first_prio > scene.tiled_priority  and not tiled_drawn then
-
 			lib.tuig.resources.tiled.get_map(scene.tiled):draw(100, 100,4,4)
 			tiled_drawn = true
 		end

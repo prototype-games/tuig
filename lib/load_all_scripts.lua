@@ -38,7 +38,6 @@ local straight_through=function(obj, url)
 end
 local function load_script(obj, url, gobber)
     local b, post_url = gobber(obj, url)
-    print(b)
     b[post_url] = rerequire(url)
 end
 
@@ -50,7 +49,6 @@ local function recursiveEnumerate(obj, folder, fileTree, first, gobber)
         local info = lfs.getInfo(file)
         if info.type=="file" and not first then
             fileTree = fileTree .. "\n" .. string.gsub(string.gsub(file, "/", "."), ".lua", "")
-            print(fileTree)
             load_script(obj, string.gsub(string.gsub(file, "/", "."), ".lua", ""), gobber)
         elseif info.type =="directory" then
             fileTree = recursiveEnumerate(obj, file, fileTree, false,  gobber)

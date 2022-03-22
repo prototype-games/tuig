@@ -54,7 +54,7 @@ frame["wait_for_signal"] = {
 
 frame["data_to_director"] = {
 	update=function(line, dt, actor, lines)
-		lib.framework.cues.data_to_director(actor, line, line.scene)
+		lib.tuig.cues.data_to_director(actor, line, line.scene)
  		return dt
 	end,
 }

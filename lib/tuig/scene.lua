@@ -8,11 +8,12 @@ return function(scene_collection)
 	AFW.directors = {}
 	AFW.phonebook = {}
 	function AFW:new_scene(scene_name)
-		local scene = {name=scene_name, objects={}, lines={}, directors={}, path_nodes={}, path_ways = {}, pipeline=pipeline}
+		local scene = {name=scene_name, objects={}, lines={}, directors={}, named_destinations = {}, 
+		destination_connections = {}
+	}
 		self.scenes[scene_name] = scene
 		return scene
 	end
-
 	function AFW:load(name)
 		local scene = path_index(scene_collection, name)
 		if not self.scenes[name] then
@@ -136,8 +137,7 @@ return function(scene_collection)
 	end
 	function AFW:add_director(scene, director_name)
 		local director = DIRECTORS[director_name]
-		local scn = self:get(scene)
-		scn.directors[director.name] = director.init(scn)
+		scene.directors[director.name] = director.init(scene)
 	end
 	return AFW
 end	

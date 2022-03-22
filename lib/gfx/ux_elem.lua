@@ -8,10 +8,13 @@ return function(name, x,y,w,h)
 		w=w,
 		h=h,
 		action = nil,
-		is_controller=false,
-		children={},
 		context = {},
+		is_controller = false,
+
 		parent=nil,
+		children = {},
+		
+		-- relative speed of execution
 		pace=1,
 		child_pace=1,
 		game_pace=1
@@ -86,10 +89,10 @@ return function(name, x,y,w,h)
 	end
 
 	function ux:ux_mousepressed(x,y,ax, ay, mbt)
-		if self.mousepressed then self:mousepressed(x-self.abs_x,y-self.abs_y, ax, ay, mbt)end
+		if self.mousepressed then self:mousepressed(x,y, ax, ay, mbt)end
 		for _,child in ipairs(self.children) do
-
-				child:ux_mousepressed(x,y, ax, ay, mbt)
+					print(child.abs_x, child.abs_y)
+				child:ux_mousepressed(x-child.abs_x,y-child.abs_y, ax, ay, mbt)
 		end
 	end
 
