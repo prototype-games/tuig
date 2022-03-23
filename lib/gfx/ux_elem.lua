@@ -19,6 +19,7 @@ return function(name, x,y,w,h)
 		child_pace=1,
 		game_pace=1
 	}
+	
 	function ux:get_controller_context(name)
 		if self.context[name] then
 			return self.context[name]
@@ -29,6 +30,7 @@ return function(name, x,y,w,h)
 		print("ERROR NO CONTEXT")
 		return nil
 	end
+
 	function ux:set_controller_context(name, value)
 		if self.is_controller then
 			self.context[name] = value
@@ -39,6 +41,7 @@ return function(name, x,y,w,h)
 		end
 		return false
 	end
+
 	function ux:set_action(action)
 		if self.is_controller then
 			self.action=action

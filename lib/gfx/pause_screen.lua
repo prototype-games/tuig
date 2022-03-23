@@ -13,6 +13,7 @@ local pause_screen = function(name,x,y,w,h,xx,yy,fun)
 	function vp:draw()
 		love.graphics.print("the game is paused",40,40)
 	end
+
 	function vp:ux_mousepressed(x,y,ax,ay,mbt)
 		if self.mousepressed then self:mousepressed(x,y, ax, ay, mbt)end
 		for _,child in ipairs(self.children) do
@@ -22,6 +23,7 @@ local pause_screen = function(name,x,y,w,h,xx,yy,fun)
 			end
 		end
 	end
+
 	function vp:get_controller_context(name)
 		return vp.UX:get_controller_context(name)
 	end
@@ -29,6 +31,7 @@ local pause_screen = function(name,x,y,w,h,xx,yy,fun)
 	function vp:unpause()
 		UX = vp.UX
 	end
+	
 	return vp
 end
 return {

@@ -3,6 +3,7 @@
 
 local viewport = function(fun)
 	local vp = lib.gfx.ux_elem("aaa",0,0,0,0)
+	
 	function vp:mousepressed(ax,ay,x,y,mbt)
 				local scene = AFW:get(self.parent.scene)
 				for name, waypoint in pairs(scene.named_destinations) do

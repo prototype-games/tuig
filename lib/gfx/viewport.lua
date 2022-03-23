@@ -1,6 +1,7 @@
 local viewport = function(name,x,y,w,h,scale,scene, xx, yy)
 	local vp = lib.gfx.ux_elem(name,x,y,w,h)
 	vp.scene = scene
+	
 	function vp:draw()
 			local a,b,c,d = love.graphics.getScissor()
 			love.graphics.line(x,y,x+w,y)

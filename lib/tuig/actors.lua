@@ -1,10 +1,8 @@
 local actors = {}
 
-
 function actors.get_line(scene, actor)
 	local linesets = scene.lines[actor]
 	local current_lineset = linesets.current[#linesets.current]
-	
 	local lines =  scene.lines[actor][current_lineset]
 	if not lines and actor.lines then
 		lines = actor.lines[current_lineset]
@@ -40,6 +38,5 @@ function actors.get_line_by_actor_name(scenes, actor_name)
 	local actor, scene = scenes:whereis(actor_name)
 	return actors.get_line(scene, actor)
 end
-
 
 return actors

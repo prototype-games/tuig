@@ -41,10 +41,8 @@ frame["cam_to_room"] = {start=function(_, _, _)
 	 	return dt
 	end
 }
---{
--- signal=str
--- alt_line = line
---}
+
+
 frame["wait_for_signal"] = {
 	update=function(line, dt, object, lines)
 		LINE_HANDLERS[line.alt_line.name].update(line.alt_line, dt, object, lines)

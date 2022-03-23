@@ -20,5 +20,4 @@ local start = function(line)
 	line.remaining_time = line.duration
 end
 
-
 return {start=start, update=update}

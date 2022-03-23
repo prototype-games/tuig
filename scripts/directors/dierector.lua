@@ -1,5 +1,6 @@
 function a()
 	local dir = {name="wasd"}
+
 	function dir:update(dt, scene, scene_collection, key, scancode, isrepeat)
 		local a = AFW.get_actor_by_name("circle2")[1].actor
 		local b = AFW.get_actor_by_name("other_circle")[1].actor
@@ -12,10 +13,12 @@ function a()
 	 			a.costume.size=100
 		end
 	end
+
 	function dir:init(scene)
 		local res = {name=dir.name}
 		return res
 	end
+	
 	return dir
 end
 return a()

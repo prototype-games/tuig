@@ -39,8 +39,6 @@ local start = function(line)
 	line.dy = ys/line.dist
 	line.timer = 0
 	line.remaining_time = line.duration
-
-
 end
 
 return {start=start, update=update}

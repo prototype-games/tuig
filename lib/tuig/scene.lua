@@ -63,8 +63,8 @@ return function(scene_collection)
 	function AFW:disable(scene_name)
 		local scene = self:get(scene_name)
 		local scene_constr = scene_collection[scene_name]
-
 		AFW.enable_counts[scene] = AFW.enable_counts[scene] or 0 - 1
+
 		if AFW.enable_counts[scene] == 0 then
 				scene_collection[scene_name]:unload_resources(self, scene)
 				AFW.enable_counts[scene] = nil
@@ -87,12 +87,11 @@ return function(scene_collection)
 		if not lines then
 			lines = {current={"IDLE"}}
 		end
-
 		local o = {a=4}
-		
 		scene.lines[actor] =lines
 		return actor
 	end
+
 	function AFW:update(dt)
 		for scene, _ in pairs(self.enable_counts) do
 			local actor_fw = lib.tuig.actors
@@ -123,10 +122,12 @@ return function(scene_collection)
 			end
 		end
 	end
+	
 	function AFW:add_actor_by_name(scene_name, actor, lines)
 		local scene = self:get(scene_name)
 		return self:add_actor_direct_from_scene(scene, actor, lines)
 	end
+	
 	function AFW:move_actor_to_scene(scene_name, actor)
 		local prev_scene = self.phonebook[actor]
 		if prev_scene then
@@ -148,6 +149,7 @@ return function(scene_collection)
 			end
 		end
 	end
+	
 	function AFW:get_all_actor_by_name(actor_name)
 		local result = {}
 		for _, scene in pairs(self.scenes) do
@@ -159,6 +161,7 @@ return function(scene_collection)
 		end
 		return result
 	end
+	
 	function AFW:get_by_actor_name(actor_name)
 		for _, scene in pairs(self.scenes) do
 			for actor, _ in pairs(scene.objects) do
@@ -168,9 +171,11 @@ return function(scene_collection)
 			end
 		end
 	end
+	
 	function AFW:add_director(scene, director_name)
 		local director = DIRECTORS[director_name]
 		scene.directors[director.name] = director.init(scene)
 	end
+	
 	return AFW
-end	
+end

@@ -80,7 +80,6 @@ function lines.clear_merge_into_and_push(lines_input, lineset_name, lineset, mer
 	lines.push_to_lines(lines_input, lineset_name, lineset)
 end
 
-
 function lines.add_lineset(scene, actor,  linesets)
 	scene.lines[actor]=linesets
 end
