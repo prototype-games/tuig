@@ -34,8 +34,8 @@ function love.load()
 
 	AFW = lib.tuig.scene(scenes)
 	AFW:init_all()
+	
 	AFW:load("scenes.room")
-
 	AFW:enable("scenes.room")
 
 	vp1=lib.gfx.viewport("vp1",0, 0, 800, 400,1, "scenes.room", 0,0)
@@ -45,7 +45,7 @@ function love.load()
 	local hover = love.graphics.newImage("resources/arrow_left_hover.png")
 	local no_hover = love.graphics.newImage("resources/arrow_left_no_hover.png")
 	UX:add_child(lib.gfx.button("btn",100,450,40,40, pause_button, no_hover, hover))
-	UX:add_child(lib.gfx.button("btn",100,500,40,40, function()print("HOI")end,no_hover, hover))
+	UX:add_child(lib.gfx.button("btn",100,500,40,40, pause_button, no_hover, hover))
 end
 local x = 0
 
