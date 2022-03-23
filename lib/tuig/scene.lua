@@ -128,14 +128,12 @@ return function(scene_collection)
 		return self:add_actor_direct_from_scene(scene, actor, lines)
 	end
 	
-	function AFW:move_actor_to_scene(scene_name, actor)
+	function AFW:move_actor_to_scene(scene_name, actor, lines)
 		local prev_scene = self.phonebook[actor]
 		if prev_scene then
-			prev_scene.objects[actor] = nil
-		end
-		self.phonebook[actor] = self:get(scene_name)
-		
-		AFW:add_actor_direct_from_scene(scene, scene_name, actor)
+			prev_scene.scene.objects[actor] = nil
+		end	
+		self:add_actor(self:get(scene_name), actor, lines)
 	end
 
 	function AFW:whereis(actor)

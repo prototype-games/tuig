@@ -5,7 +5,8 @@ end
 local p_idle="resources/backgrounds/background.png"
 
 function renderer.draw()
-	love.graphics.draw(RESOURCES.resources[p_idle].data, 0, 0, 0, -1, 1)
+	print("AAA")
+	love.graphics.draw(RESOURCES.resources[p_idle].data, 800, 0, 0, -1, 1)
 end
 
 renderer.resources=

@@ -39,13 +39,14 @@ end
 
 function frame.move_waypoint_to_waypoint(scene, actor, from, to ,overwrite)
 	local lines = {
+		{name="base.printer", print="from ".. tostring(from.x)..":"..tostring(from.y)  .. " to "..tostring(to.x) .. ":"..tostring(to.y) },
 		{name="slide_move_waypoint_to_waypoint", from=from, to=to, time=0, speed= 100},
-		{name="base.data_to_director", director_name="wasd_director", function_name="feedback"}
 	}
 	if not overwrite then
 		lines_loader.add_to_lineset_or_push(scene.lines[actor], "slide_move_waypoint_to_waypoint", lines, {"slide_move_waypoint_to_waypoint"})
 	else
 		lines_loader.clear_merge_into_and_push(scene.lines[actor], "slide_move_waypoint_to_waypoint", lines, {"slide_move_waypoint_to_waypoint"})
 	end
+	-- pprint(lines)
 end
 return frame

@@ -42,7 +42,21 @@ frame["cam_to_room"] = {start=function(_, _, _)
 	end
 }
 
+frame["teleport_to"] = {
+	start=function(line,dt, object, lines)
+			AFW:move_actor_to_scene(line.to_scene_name, object)
+			local scn = AFW:get(line.to_scene_name)
+			lib.tuig.wayfinding.teleportTo(scn, object, line.enter_waypoint_name)
+			cues_loader.execute_cue(scn, object, scripts.cues.move_cues.move_waypoint_to_waypoint, scn.named_destinations[line.enter_waypoint_name], scn.named_destinations[line.to_waypoint_name])				
+			object.wayPoint = line.to_waypoint_name
+	end
+}
+frame["printer"] = {
+	start=function(line,dt, object, lines)
+			print(line.print)
+	end
 
+}
 frame["wait_for_signal"] = {
 	update=function(line, dt, object, lines)
 		LINE_HANDLERS[line.alt_line.name].update(line.alt_line, dt, object, lines)

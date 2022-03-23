@@ -24,6 +24,7 @@ local function foundlings_merge(found, name)
 end
 
 function wayFinding.get_route_between(scene, from_waypoint_name, to_waypoint_name, found)
+
 	local a = scene.destination_connections[from_waypoint_name] or {}
 	if a[to_waypoint_name] then
 		return {a[to_waypoint_name]},1
@@ -48,14 +49,30 @@ function wayFinding.get_route_between(scene, from_waypoint_name, to_waypoint_nam
 end
 
 function wayFinding.move_actor(scene, actor, waypoint)
+
 	local way = scene.named_destinations[actor.wayPoint]
+	if waypoint==way then
+		print("GO to self")
+		return
+	end
 	if actor.x ~= way.x or actor.y ~= way.y then
 		print("Not on wp")
 		return
 	end
 	local route = wayFinding.get_route_between(scene, actor.wayPoint, waypoint.name, {})
 	for _, leg in ipairs(route) do
-		cues_loader.execute_cue(scene, actor, scripts.cues.move_cues.move_waypoint_to_waypoint, scene.named_destinations[leg.from], scene.named_destinations[leg.to])	
+		if leg.mode.type =="walk" then
+			cues_loader.execute_cue(scene, actor, scripts.cues.move_cues.move_waypoint_to_waypoint, scene.named_destinations[leg.from], scene.named_destinations[leg.to])	
+		end
+		if leg.mode.type=="walk_offscreen" then
+			print("OFFSCREEN WALK")
+			cues_loader.execute_cue(scene, actor, scripts.cues.move_cues.move_waypoint_to_waypoint, scene.named_destinations[leg.from], scene.named_destinations[leg.to])	
+			cues_loader.execute_cue(scene, actor, scripts.cues.move_cues.move_waypoint_to_waypoint, scene.named_destinations[leg.to], scene.named_destinations[leg.mode.off_node])	
+			cues_loader.execute_cue(scene, actor, scripts.cues.base_cue.teleport_to_scene, leg.mode.to_scene, leg.mode.enter_on_node, leg.mode.enter_to_node)	
+
+
+		end
+
 	end
 	actor.wayPoint=waypoint.name
 end

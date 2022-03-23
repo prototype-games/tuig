@@ -12,7 +12,6 @@ local function update(line, dt, object)
 	object.mirrored=(line.dx < 0) or (line.dx ==0 and object.mirrored)
 
 	local delta= line.speed * dt*	object.scale
-
 	if line.dist < line.speed*dt+ line.dist_travelled then
 		object.x = line.to.x
 		object.y = line.to.y
