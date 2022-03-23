@@ -9,7 +9,7 @@ function scene.init(scene_collection, name, my_scene)
 	scene_collection:add_actor(my_scene,mc)
 	
 	UX:set_controller_context("player", mc)
-	scene_collection:add_director(my_scene, "wayfinding_debug_director")
+	-- scene_collection:add_director(my_scene, "wayfinding_debug_director")
 	local imgr= my_scene.image_render_resources
 	imgr[#imgr+1] = {name="basic", priority={3}}
 
@@ -26,12 +26,11 @@ function scene.init(scene_collection, name, my_scene)
 	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination3", "home_destination2.5", {type="walk"}, true)
 	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination2", "home_destination2.5", {type="walk"}, true)
 	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination3", "home_destination4", {type="walk"}, true)
-	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination4", "home_destination5", {type="walk"}, false)
-	local mv={type="walk_offscreen", off_node="rightside_off_screen", to_scene="scenes.room2", enter_on_node="rightside_off_screen", enter_to_node="rightside" }
+	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination4", "home_destination5", {type="walk"}, true)
+	local mv={type="walk_offscreen", off_node="rightside_off_screen", to_scene="scenes.room2", enter_on_node="rightside_off_screen", enter_to_node="home_destination4" }
 	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination4", "rightside", mv, false)
-	lib.tuig.wayfinding.set_route_between(my_scene, "rightside", "home_destination4", {type="walk"}, false)
+
 	lib.tuig.wayfinding.set_route_between(my_scene, "rightside_off_screen", "rightside", {type="walk"}, true)
-	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination5", "home_destination2", {type="walk"}, false)
 
 	lib.tuig.wayfinding.teleportTo(my_scene,mc,"home_destination")
 	return my_scene
