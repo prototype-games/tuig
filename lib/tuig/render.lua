@@ -36,7 +36,9 @@ function render.render_scene(scene)
 	local renderers = {}
 
 	for _, render in ipairs(scene.image_render_resources) do
-			renderers[#renderers+1] = scripts.renderers.scenes[render.name].spawn(render.name,scene, render.priority)
+		for _, rr in ipairs(scripts.renderers.scenes[render.name].spawn(render.name,scene, render.priority)) do
+			renderers[#renderers+1] = rr
+		end
 	end
 	for actor,_ in pairs(scene.objects) do
 		if actor.costume then
@@ -55,7 +57,7 @@ function render.render_scene(scene)
 			tiled_drawn = true
 		end
 		if first_prio ~= scene.tiled_priorty then
-				renderer.draw(renderer.line, renderer.actor)
+				renderer.draw(renderer, renderer.line, renderer.actor)
 		end
 	end
 	if not tiled_drawn then
@@ -71,5 +73,28 @@ function render.render_scene(scene)
 		end
 	end
 end
+function render.scene_basic()
+	local renderer={}
+	function renderer.get_priority(name, priority)
+		return priority
+	end
+	local p_idle="resources/backgrounds/background.png"
 
+	function renderer.draw(rz)
+		love.graphics.draw(RESOURCES.resources[rz.data].data, 0, 0, 0, 1, 1)
+	end
+
+	
+	local render_list = {}
+	function renderer.init()
+		for _, item in ipairs(renderer.resources) do
+			render_list[#render_list+1] = {name=item.name, priority=item.priority, draw=renderer.draw, data=item.name}
+		end
+	end
+
+	function renderer.spawn(name, scene, priority)
+		return render_list
+	end
+	return renderer
+end
 return render

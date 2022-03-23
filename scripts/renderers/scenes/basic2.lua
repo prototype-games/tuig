@@ -1,23 +1,10 @@
-local renderer={}
-function renderer.get_priority(name, priority)
-	return priority
-end
-local p_idle="resources/backgrounds/background.png"
+local renderer=lib.tuig.render.scene_basic()
 
-function renderer.draw()
-	love.graphics.draw(RESOURCES.resources[p_idle].data, 800, 0, 0, -1, 1)
-end
 
 renderer.resources=
 {
-	{name="resources/backgrounds/background.png", fun=love.graphics.newImage}
+	{name="resources/backgrounds/level2/level/FullBG.PNG", fun=love.graphics.newImage, priority={7}},
+	{name="resources/backgrounds/level2/level/Background.PNG", fun=love.graphics.newImage, priority={6}},
+	{name="resources/backgrounds/level2/level/Foreground.PNG", fun=love.graphics.newImage, priority={1}},
 }
-
-function renderer.init()
-
-end
-
-function renderer.spawn(name, scene, priority)
-	return {name=name, priority=renderer.get_priority(name, priority), draw=renderer.draw }
-end
 return renderer

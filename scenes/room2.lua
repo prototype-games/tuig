@@ -4,28 +4,28 @@ local scene = {}
 -- enter: whenever the room gets loaded
 scene.resets="never"
 function scene.init(scene_collection, name, my_scene)
-	-- scene_collection:add_director(my_scene, "wayfinding_debug_director")
+	scene_collection:add_director(my_scene, "wayfinding_debug_director")
 	local imgr= my_scene.image_render_resources
 	imgr[#imgr+1] = {name="basic2", priority={3}}
+	lib.tuig.wayfinding.add_named_destination(my_scene, "left_of_bridge", 150,300,0.7,30)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "bridge_1", 200,310,0.7,0)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "bridge_2", 250,330,0.7,0)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "bridge_3", 300,340,0.7,0)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "bridge_3", 350,330,0.7,0)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "bridge_4", 400,325,0.7,0)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "right_of_bridge", 700,300,0.7,30)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "leftside", 50,300,0.7,30)
+	lib.tuig.wayfinding.add_named_destination(my_scene, "leftside_off_screen", -50,340,0.7,30)
 
-	lib.tuig.wayfinding.add_named_destination(my_scene, "home_destination", 800-300,200,.4,30)
-	lib.tuig.wayfinding.add_named_destination(my_scene, "home_destination2", 800-500,200,.4,30)
-	lib.tuig.wayfinding.add_named_destination(my_scene, "home_destination2.5", 800-450,540/2,.55,0)
-	lib.tuig.wayfinding.add_named_destination(my_scene, "home_destination3", 800-400,340,0.7,30)
-	lib.tuig.wayfinding.add_named_destination(my_scene, "home_destination4", 800-650,340,0.7,30)
-	lib.tuig.wayfinding.add_named_destination(my_scene, "home_destination5", 800-750,200,0.4,30)
-	lib.tuig.wayfinding.add_named_destination(my_scene, "rightside", 800-750,340,0.7,30)
-	lib.tuig.wayfinding.add_named_destination(my_scene, "rightside_off_screen", 800-850,340,0.7,30)
-
-	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination", "home_destination2", {type="walk"}, true)
-	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination3", "home_destination2.5", {type="walk"}, true)
-	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination2", "home_destination2.5", {type="walk"}, true)
-	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination3", "home_destination4", {type="walk"}, true)
-	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination4", "home_destination5", {type="walk"}, true)
-	local mv={type="walk_offscreen", off_node="rightside_off_screen", to_scene="scenes.room", enter_on_node="rightside_off_screen", enter_to_node="home_destination4" }
-	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination4", "rightside", mv, false)
-
-	lib.tuig.wayfinding.set_route_between(my_scene, "rightside_off_screen", "rightside", {type="walk"}, true)
+	local mv={type="walk_offscreen", off_node="leftside_off_screen", to_scene="scenes.room", enter_on_node="rightside_off_screen", enter_to_node="home_destination4" }
+	lib.tuig.wayfinding.set_route_between(my_scene, "left_of_bridge", "leftside", mv, false)
+	
+	lib.tuig.wayfinding.set_route_between(my_scene, "leftside", "left_of_bridge", {type="walk"}, false)
+	lib.tuig.wayfinding.set_route_between(my_scene, "left_of_bridge", "bridge_1", {type="walk"}, true)
+	lib.tuig.wayfinding.set_route_between(my_scene, "bridge_1", "bridge_2", {type="walk"}, true)
+	lib.tuig.wayfinding.set_route_between(my_scene, "bridge_2", "bridge_3", {type="walk"}, true)
+	lib.tuig.wayfinding.set_route_between(my_scene, "bridge_3", "bridge_4", {type="walk"}, true)
+	lib.tuig.wayfinding.set_route_between(my_scene, "bridge_4", "right_of_bridge", {type="walk"}, true)
 
 	return my_scene
 end

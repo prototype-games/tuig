@@ -27,7 +27,7 @@ function scene.init(scene_collection, name, my_scene)
 	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination2", "home_destination2.5", {type="walk"}, true)
 	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination3", "home_destination4", {type="walk"}, true)
 	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination4", "home_destination5", {type="walk"}, true)
-	local mv={type="walk_offscreen", off_node="rightside_off_screen", to_scene="scenes.room2", enter_on_node="rightside_off_screen", enter_to_node="home_destination4" }
+	local mv={type="walk_offscreen", off_node="rightside_off_screen", to_scene="scenes.room2", enter_on_node="leftside_off_screen", enter_to_node="left_of_bridge" }
 	lib.tuig.wayfinding.set_route_between(my_scene, "home_destination4", "rightside", mv, false)
 
 	lib.tuig.wayfinding.set_route_between(my_scene, "rightside_off_screen", "rightside", {type="walk"}, true)

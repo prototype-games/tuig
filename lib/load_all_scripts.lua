@@ -58,8 +58,8 @@ local function recursiveEnumerate(obj, folder, fileTree, first, gobber)
 end
 
 local rl = function()
-    recursiveEnumerate(scripts,"scripts", "", false, gobj)
     recursiveEnumerate(lib,"lib", "", true, gobj)
+    recursiveEnumerate(scripts,"scripts", "", false, gobj)
     recursiveEnumerate(scenes,"scenes", "", false, straight_through)
 end
 RELOADALL = function()

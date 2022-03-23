@@ -20,7 +20,7 @@ function renderer.get_priority(line, actor, base_level)
 	return {base_level or 5,actor.z or 1}
 end
 
-function renderer.draw(line, actor)
+function renderer.draw(renderer, line, actor)
 	mirrored= (actor.mirrored and -1 ) or 1
 		local frm = math.floor((line.timer or 0)/frame_time)%#quads + 1
 	if line.name=="base.idle" then
