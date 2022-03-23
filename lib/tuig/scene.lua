@@ -8,47 +8,79 @@ return function(scene_collection)
 	AFW.directors = {}
 	AFW.phonebook = {}
 	function AFW:new_scene(scene_name)
-		local scene = {name=scene_name, objects={}, lines={}, directors={}, named_destinations = {}, 
-		destination_connections = {},
-		image_render_resources = {}
-	}
+		local scene = 
+		{
+			name=scene_name,
+			objects={},
+			lines={},
+			directors={},
+			named_destinations = {}, 
+			destination_connections = {},
+			image_render_resources = {}
+		}
 		self.scenes[scene_name] = scene
 		return scene
 	end
+
 	function AFW:load(name)
 		local scene = path_index(scene_collection, name)
 		if not self.scenes[name] then
 			print(name)
 		end
 	end
+
 	function AFW:init_all()
 		for url, scene in pairs(scene_collection) do
 			AFW.directors[url] = {}
 			AFW.scenes[url]  = scene.init(self, url, self:new_scene(url))
 		end
 	end
+
 	function AFW:get(name)
 		return self.scenes[name]
 	end
 
 	function AFW:enable(scene_name)
 		local scene = self:get(scene_name)
+		local scene_constr = scene_collection[scene_name]
 		if not  self.loaded[scene] then
-			scene_collection[scene_name]:load_resources(self, scene)
+			
+			for _, obj in ipairs(scene_constr.renderers) do
+				local a = scripts.renderers
+				for _, path in ipairs(obj) do
+					a =  a[path]
+				end
+				for _,rr in ipairs(a.resources) do
+					RESOURCES.load(rr)
+				end
+				a.init()
+			end
 			self.loaded[scene] = true
 		end
-
 		AFW.enable_counts[scene] = AFW.enable_counts[scene] or 0 + 1
 	end
+
 	function AFW:disable(scene_name)
 		local scene = self:get(scene_name)
+		local scene_constr = scene_collection[scene_name]
 
 		AFW.enable_counts[scene] = AFW.enable_counts[scene] or 0 - 1
 		if AFW.enable_counts[scene] == 0 then
 				scene_collection[scene_name]:unload_resources(self, scene)
 				AFW.enable_counts[scene] = nil
+	
+				for _, obj in ipairs(scene_constr.renderers) do
+					local a = scripts.renderers
+					for _, path in ipairs(obj) do
+						a =  a[path]
+					end
+					for _,rr in ipairs(a.resources) do
+						RESOURCES.unload(rr)
+					end
+				end
 		end
 	end
+
 	function AFW:add_actor(scene, actor, lines)
 		self.phonebook[actor] = {scene=scene, actor=actor}
 		scene.objects[actor] = actor

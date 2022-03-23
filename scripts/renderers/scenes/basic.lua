@@ -1,16 +1,17 @@
-local obj = love.graphics.newImage("resources/backgrounds/background.png")
 local renderer={}
 function renderer.get_priority(name, priority)
 	return priority
 end
+local p_idle="resources/backgrounds/background.png"
 function renderer.draw()
-	love.graphics.draw(obj, 0, 0)
+	love.graphics.draw(RESOURCES.resources[p_idle].data, 0, 0)
 end
 
-function renderer.load_resources(scene, name, priority)
-
-end
-function renderer.unload_resources(scene, name, priority)
+renderer.resources=
+{
+	{name="resources/backgrounds/background.png", fun=love.graphics.newImage}
+}
+function renderer.init()
 
 end
 function renderer.spawn(name, scene, priority)

@@ -12,6 +12,8 @@ cues_loader = lib.tuig.cues
 
 AFW = lib.tuig.scene()
 DIRECTORS = {}
+
+
 local pause_button = function()
 	if UX.pace > 0 then
 		lib.gfx.pause_screen.pause()
@@ -26,6 +28,8 @@ function love.load()
 	-- imports
 	lib.tuig.directors.all_directors(AFW, scripts.directors, "")
 	lines_loader.get_lines(scripts.linereaders, "")
+
+	RESOURCES=lib.tuig.resource_collection()
 
 
 	AFW = lib.tuig.scene(scenes)
