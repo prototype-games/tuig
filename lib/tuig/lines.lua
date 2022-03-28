@@ -18,11 +18,7 @@ function lines.get_lineset_name(lineset_name)
 	return lineset_name .."#".. tostring(COUNTER)
 end
 
-function lines.push_to_lines(lines_input, lineset_name, lineset)
-	local UUID_lineset_name = lines.get_lineset_name(lineset_name)
-	lines_input.current[#lines_input.current+1] = UUID_lineset_name
-	lines_input[UUID_lineset_name] = lineset
-end
+
 
 -- the merge_into_list is a set of accepted names for linesets to merge into
 -- if the lineset isn't named like one of these: push a new one with the correct name
@@ -44,41 +40,32 @@ function lines.add_to_lineset_or_push(lines_input, lineset_name, lineset, merge_
 	lines.push_to_lines(lines_input, lineset_name, lineset)
 end
 
--- This one passes over the lines.current, 
--- and finds the first spot left to right after which all 
--- the linesets are named in a matching way
--- it then clears out all spots after this spot
--- and pushes the new one
-function lines.clear_merge_into_and_push(lines_input, lineset_name, lineset, merge_into)
-	local counter = 1
-	local reset = 1
-	while counter <= #lines_input.current do
-		local is_match = false
-		local a = lines_input.current[counter]
-		local matched = ""
-		for str in  a:gmatch("[^#]+") do
-			matched = str
-			break
-		end
-
-		for _, v in pairs(merge_into) do
-			if v == matched then
-				is_match = true
-			end
-		end
-
-		if not is_match then
-			reset=counter
-		end
-		counter = counter + 1
-	end
-	reset = reset + 1
-	while reset <= #lines_input.current do
-		lines_input.current[reset] = nil
-		reset = reset + 1
-	end
-	lines.push_to_lines(lines_input, lineset_name, lineset)
+-- the merge_into_list is a set of accepted names for linesets to merge into
+-- if the lineset isn't named like one of these: push a new one with the correct name
+function lines.add_or_push(scene, actor, lineset_name, lineset, merge_into)
+	local lines = scene.lines[actor]
+	lines.add_to_lineset_or_push(lines, lineset_name, lineset, merge_into)
 end
+
+
+function lines.push_to_lines(lines_input, lineset_name, lineset)
+	local UUID_lineset_name = lines.get_lineset_name(lineset_name)
+	lines_input.current[#lines_input.current+1] = UUID_lineset_name
+	lines_input[UUID_lineset_name] = lineset
+end
+
+function lines.push(scene, actor, lineset_name, lineset)
+	lines.push_to_lineset(scene.lines[actor], lineset_name, lineset)
+end
+
+function lines.clear(scene, actor)
+	 scene.lines[actor]={current={"IDLE"}}
+end
+
+function lines.clear_and_add_on_top(scene, actor, name, lineset)
+	lines.clear(scene, actor)
+	lines.add_on_top(scene, actor, name, lineset)
+end	
 
 function lines.add_lineset(scene, actor,  linesets)
 	scene.lines[actor]=linesets

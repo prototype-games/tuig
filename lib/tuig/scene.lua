@@ -16,6 +16,7 @@ return function(scene_collection)
 			directors={},
 			named_destinations = {}, 
 			destination_connections = {},
+			final_destination_extras= {},
 			image_render_resources = {}
 		}
 		self.scenes[scene_name] = scene

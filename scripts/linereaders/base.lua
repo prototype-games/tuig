@@ -53,7 +53,6 @@ frame["teleport_to"] = {
 }
 frame["printer"] = {
 	start=function(line,dt, object, lines)
-			print(line.print)
 	end
 
 }

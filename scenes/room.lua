@@ -9,7 +9,8 @@ function scene.init(scene_collection, name, my_scene)
 	scene_collection:add_actor(my_scene,mc)
 	
 	UX:set_controller_context("player", mc)
-	-- scene_collection:add_director(my_scene, "wayfinding_debug_director")
+	scene_collection:add_director(my_scene, "wayfinding_debug_director")
+	scene_collection:add_director(my_scene, "reset_director")
 	local imgr= my_scene.image_render_resources
 	imgr[#imgr+1] = {name="basic", priority={3}}
 

@@ -3,6 +3,12 @@ local wayFinding = {}
 function wayFinding.add_named_destination(scene, name, x, y, scale, radius)
 	scene.named_destinations[name] = {x=x, y=y, radius=radius,name=name, scale=scale}
 end
+function wayFinding.getLine(from, to)
+	return {name="slide_move_waypoint_to_waypoint", from=from, to=to, time=0, speed= 100}
+end
+function wayFinding.add_final_destination_extras(scene, name, lines)
+	scene.final_destination_extras[name] = {name=name,lineset={lines}}
+end
 
 function wayFinding.set_route_between(scene, from_waypoint_name, to_waypoint_name, mode, both_ways)
 	local node = {from=from_waypoint_name, to=to_waypoint_name, mode=mode}
@@ -60,17 +66,16 @@ function wayFinding.move_actor(scene, actor, waypoint)
 		return
 	end
 	local route = wayFinding.get_route_between(scene, actor.wayPoint, waypoint.name, {})
+	local final_leg = nil
 	for _, leg in ipairs(route) do
+		final_leg = leg
 		if leg.mode.type =="walk" then
 			cues_loader.execute_cue(scene, actor, scripts.cues.move_cues.move_waypoint_to_waypoint, scene.named_destinations[leg.from], scene.named_destinations[leg.to])	
 		end
 		if leg.mode.type=="walk_offscreen" then
-			print("OFFSCREEN WALK")
 			cues_loader.execute_cue(scene, actor, scripts.cues.move_cues.move_waypoint_to_waypoint, scene.named_destinations[leg.from], scene.named_destinations[leg.to])	
 			cues_loader.execute_cue(scene, actor, scripts.cues.move_cues.move_waypoint_to_waypoint, scene.named_destinations[leg.to], scene.named_destinations[leg.mode.off_node])	
 			cues_loader.execute_cue(scene, actor, scripts.cues.base_cue.teleport_to_scene, leg.mode.to_scene, leg.mode.enter_on_node, leg.mode.enter_to_node)	
-
-
 		end
 
 	end

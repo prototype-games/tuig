@@ -21,6 +21,9 @@ local pause_button = function()
 		UX:unpause()
 	end
 end
+function scn()
+	return AFW:get_by_actor_name("player").scene.name
+end
 function love.load()
 	UX = lib.gfx.ux_elem("UX",0,0,800,600)
 	
@@ -39,9 +42,7 @@ function love.load()
 	AFW:load("scenes.room2")
 	AFW:enable("scenes.room")
 	AFW:enable("scenes.room2")
-	function scn()
-		return AFW:get_by_actor_name("player").scene.name
-	end
+
 	vp1=lib.gfx.viewport("vp1",0, 0, 800, 400,1, scn, 0,0)
 	vp1:add_child(lib.gfx.wayfinding(lib.tuig.wayfinding.move_actor))
 	UX:add_child(vp1)
@@ -63,8 +64,16 @@ function love.draw()
 	UX:ux_draw(0,0)
 end
 
-function love.keypressed()
-		pause_button()
+function love.keypressed(key, scancode, is_repeat)
+		-- pause_button()
+		local scene = AFW:get(scn())
+		for named, director in pairs(scene.directors) do
+			-- print(named)
+			if DIRECTORS[named].keypressed then
+				DIRECTORS[named].keypressed(director, scene, AFW, key, scancode, is_repeat)
+			end
+		end
+		
 end
 
 function love.mousepressed(x,y,mbt)

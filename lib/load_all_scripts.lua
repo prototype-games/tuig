@@ -65,7 +65,7 @@ end
 RELOADALL = function()
     rl()
     DIRECTORS = {}
-    lib.framework.directors:all_directors(scripts.directors, "")
+    lib.tuig.directors:all_directors(scripts.directors, "")
 end
 rl()
 
