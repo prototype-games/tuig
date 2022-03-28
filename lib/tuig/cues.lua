@@ -1,21 +1,9 @@
-local function get_actor_by_name(name)
-	return function()
-		return AFW:get_by_actor_name(name)
-	end
-end
-
-local function execute_cue_filtered(filter, cue, ...)
-	local actors = filter()
-	for _, actor_and_scene in ipairs(actors) do
-		cue(actor_and_scene.scene, actor_and_scene.actor, ...)
-	end
-end
-
-local function execute_cue(scene, actor, cue, ...)
+local cues = {}
+function  cues.execute_cue(scene, actor, cue, ...)
 		cue(scene, actor, ...)
 end
 
-local function data_to_director(actor, line, scene)
+function  cues.data_to_director(actor, line, scene)
 	if not scene then
 		print("ERROR with data to director")
 		return
@@ -26,7 +14,7 @@ local function data_to_director(actor, line, scene)
 	director[line.function_name](scene.directors[line.director_name], actor, line, scene)
 end
 
-local function emit_waitfor(scene, actor, signal_name)
+function  cues.emit_waitfor(scene, actor, signal_name)
 	local line, _ =lib.framework.actors.get_line(scene, actor)
 	if line.name=="base.wait_for_signal" then
 		if line.signal==signal_name then
@@ -39,11 +27,4 @@ local function emit_waitfor(scene, actor, signal_name)
 	end
 end
 
-return 
-{
-	execute_cue=execute_cue,
-	execute_cue_filtered=execute_cue_filtered,
-	get_actor_by_name=get_actor_by_name,
-	data_to_director=data_to_director,
-	emit_waitfor=emit_waitfor,
-}
+return cues
