@@ -97,8 +97,9 @@ return function(scene_collection)
 		for scene, _ in pairs(self.enable_counts) do
 			local actor_fw = lib.tuig.actors
 			for k,v in pairs(scene.directors)do
-				if  DIRECTORS[k].update then
-					DIRECTORS[k].update(v, dt, scene, AFW)
+				print(k)
+				if  v.update then
+					v:update(dt, scene, AFW)
 				end
 			end
 			local current_scene=scene
@@ -172,8 +173,9 @@ return function(scene_collection)
 	end
 	
 	function AFW:add_director(scene, director_name)
-		local director = DIRECTORS[director_name]
+		local director = scripts.directors[director_name]
 		scene.directors[director.name] = director.init(scene)
+		setmetatable(scene.directors[director.name], {__index=DIRECTORS[director_name]})
 	end
 	
 	return AFW

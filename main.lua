@@ -11,7 +11,6 @@ lines_loader = lib.tuig.lines
 cues_loader = lib.tuig.cues
 
 AFW = lib.tuig.scene()
-DIRECTORS = {}
 
 
 local pause_button = function()
@@ -69,8 +68,8 @@ function love.keypressed(key, scancode, is_repeat)
 		local scene = AFW:get(scn())
 		for named, director in pairs(scene.directors) do
 			-- print(named)
-			if DIRECTORS[named].keypressed then
-				DIRECTORS[named].keypressed(director, scene, AFW, key, scancode, is_repeat)
+			if director.keypressed then
+				director:keypressed(scene, AFW, key, scancode, is_repeat)
 			end
 		end
 		

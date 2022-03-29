@@ -31,7 +31,6 @@ function actors.next_line(scene, actor)
 		end
 	end
 	return actors.get_line(scene, actor)
-
 end
 
 function actors.get_line_by_actor_name(scenes, actor_name)

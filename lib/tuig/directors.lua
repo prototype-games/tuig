@@ -2,6 +2,7 @@ local lib = {}
 DIRECTORS = {}
 function lib:add_director(director)
 	self.directors[#self.directors+1] = director
+	love.event.quit( exitstatus )
 end
 
 function lib:run_directors()

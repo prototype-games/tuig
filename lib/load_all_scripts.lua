@@ -64,7 +64,6 @@ local rl = function()
 end
 RELOADALL = function()
     rl()
-    DIRECTORS = {}
     lib.tuig.directors:all_directors(scripts.directors, "")
 end
 rl()

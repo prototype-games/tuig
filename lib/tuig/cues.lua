@@ -3,6 +3,14 @@ function  cues.execute_cue(scene, actor, cue, ...)
 		cue(scene, actor, ...)
 end
 
+local mt = {__call=function(cue, scene, actor, cue_data)
+end}
+function cues.new()
+	local obj = {}
+	setmetatable(obj, mt)
+	return obj
+end
+
 function  cues.data_to_director(actor, line, scene)
 	if not scene then
 		print("ERROR with data to director")
@@ -10,8 +18,8 @@ function  cues.data_to_director(actor, line, scene)
 	else
 		scene = AFW.SCENES[scene]
 	end
-	local director = DIRECTORS[line.director_name]
-	director[line.function_name](scene.directors[line.director_name], actor, line, scene)
+	local director = scene.directors[line.director_name]
+	director[line.function_name](director, actor, line, scene)
 end
 
 function  cues.emit_waitfor(scene, actor, signal_name)
@@ -22,7 +30,6 @@ function  cues.emit_waitfor(scene, actor, signal_name)
 			if LINE_HANDLERS[line.name].start then
 				LINE_HANDLERS[line.name].start(line, lines, actor)
 			end
-
 		end
 	end
 end

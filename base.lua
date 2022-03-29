@@ -4,7 +4,6 @@ LINE_HANDLERS = {add=function(name, start, update, draw)
 end 
 }
 
-DIRECTORS = {}
 RESOURCES = {}
 function loveHug(name, scene_collection, skip_lines_if_any_director_successful)
 	love[name] =  function(...)
@@ -12,8 +11,8 @@ function loveHug(name, scene_collection, skip_lines_if_any_director_successful)
 		local current_scene=AFW:get_current_scene()
 
 		for k,v in pairs(scene_collection:get_current_scene().directors)do
-			if DIRECTORS[k][name] then
-				should_return = should_return or DIRECTORS[k][name](v, dt, scene_collection:get_current_scene(), scene_collection, ...)
+			if v[name] then
+				should_return = should_return or v[name](v, dt, scene_collection:get_current_scene(), scene_collection, ...)
 			end
 		end
 		

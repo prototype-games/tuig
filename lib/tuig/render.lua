@@ -68,8 +68,8 @@ function render.render_scene(scene)
 		end
 	end
 		for _, director in pairs(scene.directors) do
-		if DIRECTORS[director.name].draw then
-			DIRECTORS[director.name].draw(scene)
+		if director.draw then
+			director:draw(scene)
 		end
 	end
 end
