@@ -2,7 +2,7 @@ function a()
 	local dir = {name="wasd"}
 	local should_wait_until_finished_walking = false
 
-	function dirdraw(scene) 
+	function dir:draw(scene) 
 		love.graphics.setColor(1,0,0)
 		for name, target in pairs(scene.named_destinations) do
 			love.graphics.circle("fill",target.x, target.y, target.radius)
