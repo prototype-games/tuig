@@ -29,7 +29,6 @@ function love.load()
 	UX.is_controller=true
 
 	-- imports
-	lib.tuig.directors.all_directors(AFW, scripts.directors, "")
 	lines_loader.get_lines(scripts.linereaders, "")
 
 	RESOURCES=lib.tuig.resource_collection()

@@ -175,7 +175,7 @@ return function(scene_collection)
 	function AFW:add_director(scene, director_name)
 		local director = scripts.directors[director_name]
 		scene.directors[director.name] = director.init(scene)
-		setmetatable(scene.directors[director.name], {__index=DIRECTORS[director_name]})
+		setmetatable(scene.directors[director.name], {__index=director})
 	end
 	
 	return AFW
