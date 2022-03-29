@@ -1,5 +1,5 @@
 function a()
-	local dir = {name="wasd"}
+	local dir = {}
 
 	function dir:update(dt, scene, scene_collection, key, scancode, isrepeat)
 		local a = AFW.get_actor_by_name("circle2")[1].actor

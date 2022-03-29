@@ -4,17 +4,17 @@ function a()
 	function dir:keypressed(scene, scene_collection, key, scancode, isrepeat)
 		if key=="f9" then
 			RELOADALL()
-				RESOURCES=lib.tuig.resource_collection()
+			RESOURCES=lib.tuig.resource_collection()
 
-				AFW = lib.tuig.scene(scenes)
-				AFW:init_all()
-
-				
-	AFW:load("scenes.room")
-	AFW:load("scenes.room2")
-	AFW:enable("scenes.room")
-	AFW:enable("scenes.room2")
-	end
+			AFW = lib.tuig.scene(scenes)
+			AFW:init_all()
+	
+			AFW:load("scenes.room")
+			AFW:load("scenes.room2")
+			AFW:enable("scenes.room")
+			AFW:enable("scenes.room2")
+		end
+		
 		if key=="f8" then
 			for actor,_ in pairs(scene.objects) do
 				lib.tuig.lines.clear(scene, actor)
@@ -23,7 +23,7 @@ function a()
 	end
 	
 	function dir:init(scene)
-		local res = {name=dir.name, wasd={}}
+		local res = {name=dir.name}
 		return res
 	end
 
