@@ -5,7 +5,6 @@ function lib.init()
 	for k,v in pairs(lib) do
 		res[k] = v
 	end
-	res.directors = {}
 	return res
 end
 
