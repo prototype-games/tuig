@@ -1,5 +1,5 @@
 function a()
-	local dir = {}
+	local dir = {	}
 
 	function dir:update(dt, scene, scene_collection, key, scancode, isrepeat)
 		local a = AFW.get_actor_by_name("circle2")[1].actor
@@ -14,9 +14,8 @@ function a()
 		end
 	end
 
-	function dir:init(scene)
-		local res = {name=dir.name}
-		return res
+	function dir:init(obj, scene)
+		return obj
 	end
 	
 	return dir

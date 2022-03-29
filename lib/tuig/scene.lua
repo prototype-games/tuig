@@ -5,7 +5,6 @@ return function(scene_collection)
 	AFW.scenes = {}
 	AFW.loaded = {}
 	AFW.enable_counts = {}
-	AFW.directors = {}
 	AFW.phonebook = {}
 	function AFW:new_scene(scene_name)
 		local scene = 
@@ -17,22 +16,14 @@ return function(scene_collection)
 			named_destinations = {}, 
 			destination_connections = {},
 			final_destination_extras= {},
-			image_render_resources = {}
 		}
 		self.scenes[scene_name] = scene
 		return scene
 	end
 
-	function AFW:load(name)
-		local scene = path_index(scene_collection, name)
-		if not self.scenes[name] then
-			print(name)
-		end
-	end
 
 	function AFW:init_all()
 		for url, scene in pairs(scene_collection) do
-			AFW.directors[url] = {}
 			AFW.scenes[url]  = scene.init(self, url, self:new_scene(url))
 		end
 	end
@@ -44,7 +35,7 @@ return function(scene_collection)
 	function AFW:enable(scene_name)
 		local scene = self:get(scene_name)
 		local scene_constr = scene_collection[scene_name]
-		if not  self.loaded[scene] then
+		if not  self.loaded[scene_name] then
 			
 			for _, obj in ipairs(scene_constr.renderers) do
 				local a = scripts.renderers
@@ -56,19 +47,19 @@ return function(scene_collection)
 				end
 				a.init()
 			end
-			self.loaded[scene] = true
+			self.loaded[scene_name] = true
 		end
-		AFW.enable_counts[scene] = AFW.enable_counts[scene] or 0 + 1
+		AFW.enable_counts[scene_name] = AFW.enable_counts[scene_name] or 0 + 1
 	end
 
 	function AFW:disable(scene_name)
 		local scene = self:get(scene_name)
 		local scene_constr = scene_collection[scene_name]
-		AFW.enable_counts[scene] = AFW.enable_counts[scene] or 0 - 1
+		AFW.enable_counts[scene_name] = AFW.enable_counts[scene_name] or 0 - 1
 
-		if AFW.enable_counts[scene] == 0 then
+		if AFW.enable_counts[scene_name] == 0 then
 				scene_collection[scene_name]:unload_resources(self, scene)
-				AFW.enable_counts[scene] = nil
+				AFW.enable_counts[scene_name] = nil
 	
 				for _, obj in ipairs(scene_constr.renderers) do
 					local a = scripts.renderers
@@ -94,10 +85,10 @@ return function(scene_collection)
 	end
 
 	function AFW:update(dt)
-		for scene, _ in pairs(self.enable_counts) do
+		for scene_name, _ in pairs(self.enable_counts) do
 			local actor_fw = lib.tuig.actors
+			local scene = AFW:get(scene_name)
 			for k,v in pairs(scene.directors)do
-				print(k)
 				if  v.update then
 					v:update(dt, scene, AFW)
 				end
@@ -173,9 +164,12 @@ return function(scene_collection)
 	end
 	
 	function AFW:add_director(scene, director_name)
+
 		local director = scripts.directors[director_name]
-		scene.directors[director.name] = director.init(scene)
-		setmetatable(scene.directors[director.name], {__index=director})
+		local d = director:init({}, scene)
+		d.name = director_name
+		setmetatable(d, {__index=director})
+		scene.directors[d.name] = d
 	end
 	
 	return AFW

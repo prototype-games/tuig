@@ -34,13 +34,10 @@ function love.load()
 	RESOURCES=lib.tuig.resource_collection()
 
 	AFW = lib.tuig.scene(scenes)
-	AFW:init_all()
-
-	AFW:load("scenes.room")
-	AFW:load("scenes.room2")
-	AFW:enable("scenes.room")
-	AFW:enable("scenes.room2")
-
+	-- AFW:init_all()
+	-- AFW:enable("scenes.room")
+	-- AFW:enable("scenes.room2")
+	lib.tuig.save_load.load(AFW, "savepoint.dat")
 	vp1=lib.gfx.viewport("vp1",0, 0, 800, 400,1, scn, 0,0)
 	vp1:add_child(lib.gfx.wayfinding(lib.tuig.wayfinding.move_actor))
 	UX:add_child(vp1)

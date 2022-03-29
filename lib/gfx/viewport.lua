@@ -13,7 +13,7 @@ local viewport = function(name,x,y,w,h,scale,scene, xx, yy)
 			love.graphics.setScissor(x,y,w,h)
 			love.graphics.translate(x + (xx or 0),y+ (yy or 0))
 			love.graphics.scale(scale)
-
+			print(vp.scene())
 			lib.tuig.render.render_scene(AFW:get(vp.scene()))
 
 			love.graphics.pop()

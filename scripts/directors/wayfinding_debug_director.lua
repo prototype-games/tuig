@@ -1,5 +1,5 @@
 function a()
-	local dir = {name="wasd"}
+	local dir = {}
 	local should_wait_until_finished_walking = false
 
 	function dir:draw(scene) 
@@ -17,9 +17,8 @@ function a()
 		love.graphics.setColor(1,1,1)
 	end
 
-	function dir:init(scene)
-		local res = {name=dir.name}
-		return res
+	function dir:init(obj, scene)
+		return obj
 	end
 	
 	return dir

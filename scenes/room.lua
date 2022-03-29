@@ -8,7 +8,7 @@ function scene.init(scene_collection, name, my_scene)
 	local mc = scripts.actors.mc.constr(4,5)
 	scene_collection:add_actor(my_scene,mc)
 	
-	UX:set_controller_context("player", mc)
+	UX:set_controller_context("player", "player")
 	scene_collection:add_director(my_scene, "wayfinding_debug_director")
 	scene_collection:add_director(my_scene, "reset_director")
 	local imgr= my_scene.image_render_resources

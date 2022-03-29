@@ -12,8 +12,8 @@ local viewport = function(fun)
 			local yy = ay - waypoint.y
 
 			if xx*xx + yy * yy < waypoint.radius*waypoint.radius then
-				local mc = UX:get_controller_context("player")
-				fun(scene,mc, waypoint)
+				local a = AFW:get_by_actor_name(UX:get_controller_context("player"))
+				fun(scene,a.actor, waypoint)
 			end
 		end
 	end
