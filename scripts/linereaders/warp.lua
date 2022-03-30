@@ -1,9 +1,9 @@
 local warps = {}
 warps.to_coordinates = {
-	start=function(line, lines, actor)
+	start=function(scene,line, lines, actor)
 
 	end,
-	 update=function(line, dt, actor, lines)
+	 update=function(scene, line, dt, actor, lines)
 		actor.x=line.x
 		actor.y=line.y
 	 	return dt

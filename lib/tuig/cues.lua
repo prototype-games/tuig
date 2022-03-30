@@ -28,7 +28,7 @@ function  cues.emit_waitfor(scene, actor, signal_name)
 		if line.signal==signal_name then
 			local line, lines = lib.framework.actors.next_line(scene, actor)	
 			if LINE_HANDLERS[line.name].start then
-				LINE_HANDLERS[line.name].start(line, lines, actor)
+				LINE_HANDLERS[line.name].start(scene, line, lines, actor)
 			end
 		end
 	end

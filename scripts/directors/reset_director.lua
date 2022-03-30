@@ -7,12 +7,8 @@ function a()
 			RESOURCES=lib.tuig.resource_collection()
 
 			AFW = lib.tuig.scene(scenes)
-			AFW:init_all()
-	
-			AFW:load("scenes.room")
-			AFW:load("scenes.room2")
+
 			AFW:enable("scenes.room")
-			AFW:enable("scenes.room2")
 		end
 
 		if key=="f8" then

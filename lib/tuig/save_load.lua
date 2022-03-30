@@ -4,10 +4,8 @@ local savesys = {}
 function savesys.load(AFW, file_name)
 	local dat = lib.bitser.bitser.loadLoveFile(file_name)
 	AFW.scenes= dat.scenes
-	pprint(dat.enable_counts)
-	for name, count in pairs(dat.enable_counts) do
-		pprint(name)
-		AFW:enable(name)
+	for scene_name, _ in pairs(dat.enable_counts	) do
+		AFW:enable(scene_name)
 	end
 	AFW.enable_counts=dat.enable_counts
 	AFW.phonebook=dat.phonebook

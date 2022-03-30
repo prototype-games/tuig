@@ -1,4 +1,4 @@
-local function update(line, dt, object)
+local function update(scene, line, dt, object)
 	local ddt = (dt / line.remaining_time)
 	local addt = 1 - ddt
 	if addt < 0 then
@@ -16,7 +16,7 @@ local function update(line, dt, object)
 	return 0
 end
 
-local start = function(line)
+local start = function(scene, line)
 	line.remaining_time = line.duration
 end
 

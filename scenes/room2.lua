@@ -5,6 +5,8 @@ local scene = {}
 scene.resets="never"
 function scene.init(scene_collection, name, my_scene)
 	scene_collection:add_director(my_scene, "wayfinding_debug_director")
+	scene_collection:add_director(my_scene, "reset_director")
+
 	local imgr= my_scene.image_render_resources
 	imgr[#imgr+1] = {name="basic2", priority={3}}
 	lib.tuig.wayfinding.add_named_destination(my_scene, "left_of_bridge", 150,300,0.7,30)

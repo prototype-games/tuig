@@ -1,4 +1,4 @@
-local function update(line, dt, object)
+local function update(scene, line, dt, object)
 	if not line.dist then
 		local xs = (line.to.x-line.from.x)
 		local ys = (line.to.y-line.from.y)
@@ -29,7 +29,7 @@ local function update(line, dt, object)
 	return 0
 end
 
-local start = function(line)
+local start = function(scene, line)
 	local xs = (line.to.x-line.from.x)
 	local ys = (line.to.y-line.from.y)
 	line.dist = math.sqrt(xs*xs+ys*ys)

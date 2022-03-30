@@ -16,6 +16,7 @@ return function(scene_collection)
 			named_destinations = {}, 
 			destination_connections = {},
 			final_destination_extras= {},
+			image_render_resources={}
 		}
 		self.scenes[scene_name] = scene
 		return scene
@@ -33,7 +34,12 @@ return function(scene_collection)
 	end
 
 	function AFW:enable(scene_name)
+
 		local scene = self:get(scene_name)
+		if not scene then
+			scene = 		 scene_collection[scene_name].init(self, scene_name, self:new_scene(scene_name))
+			AFW.scenes[scene_name]  = scene
+		end
 		local scene_constr = scene_collection[scene_name]
 		if not  self.loaded[scene_name] then
 			
@@ -99,16 +105,16 @@ return function(scene_collection)
 				while time_left > 0 do
 					local line, lines = actor_fw.get_line(current_scene, actor)
 					if LINE_HANDLERS[line.name].update then
-						time_left = LINE_HANDLERS[line.name].update(line, dt, actor, lines)
+						time_left = LINE_HANDLERS[line.name].update(scene, line, dt, actor, lines)
 					end
 					if time_left > 0 then
 						if LINE_HANDLERS[line.name].finish then
-							LINE_HANDLERS[line.name].finish(line, lines, actor)
+							LINE_HANDLERS[line.name].finish(scene, line, lines, actor)
 						end	
 						local line, lines = actor_fw.next_line(current_scene, actor)
 
 						if LINE_HANDLERS[line.name].start then
-							LINE_HANDLERS[line.name].start(line, lines, actor)
+							LINE_HANDLERS[line.name].start(scene, line, lines, actor)
 						end	
 					end
 				end

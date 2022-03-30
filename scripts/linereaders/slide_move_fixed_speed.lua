@@ -1,4 +1,4 @@
-local function update(line, dt, object)
+local function update(scene, line, dt, object)
 	local xs = (line.x - object.x)
 	local ys = (line.y - object.y)
 	local len = math.sqrt(xs*xs + ys*ys)
@@ -15,7 +15,7 @@ local function update(line, dt, object)
 	return 0
 end
 
-local start = function(line)
+local start = function(scene, line)
 	line.timer = 0
 	line.remaining_time = line.duration
 end

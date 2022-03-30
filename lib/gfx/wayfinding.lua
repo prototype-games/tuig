@@ -6,6 +6,7 @@ local viewport = function(fun)
 	
 	function vp:mousepressed(ax,ay,x,y,mbt)
 		local scene = AFW:get(self.parent.scene())
+		print(ax, ay)
 		for name, waypoint in pairs(scene.named_destinations) do
 
 			local xx = ax - waypoint.x
