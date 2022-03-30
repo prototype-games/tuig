@@ -31,9 +31,6 @@ function frame.move_waypoint_to_waypoint(scene, actor, from, to ,overwrite)
 		-- {name="base.printer", print="from ".. tostring(from.x)..":"..tostring(from.y)  .. " to "..tostring(to.x) .. ":"..tostring(to.y) },
 		{name="slide_move_waypoint_to_waypoint", from=from, to=to, time=0, speed= 100},
 	}
-		pprint(scene.lines)
-		pprint(scene.lines[actor])
-	print("ZZ")
 		lines_loader.add_to_lineset_or_push(scene.lines[actor], "slide_move_waypoint_to_waypoint", lines, {"slide_move_waypoint_to_waypoint"})
 end
 return frame

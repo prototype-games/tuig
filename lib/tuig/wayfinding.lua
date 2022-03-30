@@ -70,7 +70,6 @@ function wayFinding.move_actor(scene, actor, waypoint)
 	for _, leg in ipairs(route) do
 		final_leg = leg
 		if leg.mode.type =="walk" then
-			pprint(actor)
 			cues_loader.execute_cue(scene, actor, scripts.cues.move_cues.move_waypoint_to_waypoint, scene.named_destinations[leg.from], scene.named_destinations[leg.to])	
 		end
 		if leg.mode.type=="walk_offscreen" then

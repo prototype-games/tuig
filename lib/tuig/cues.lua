@@ -3,14 +3,6 @@ function  cues.execute_cue(scene, actor, cue, ...)
 		cue(scene, actor, ...)
 end
 
-local mt = {__call=function(cue, scene, actor, cue_data)
-end}
-function cues.new()
-	local obj = {}
-	setmetatable(obj, mt)
-	return obj
-end
-
 function  cues.data_to_director(actor, line, scene)
 	if not scene then
 		print("ERROR with data to director")

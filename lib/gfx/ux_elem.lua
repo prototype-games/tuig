@@ -94,7 +94,6 @@ return function(name, x,y,w,h)
 	function ux:ux_mousepressed(x,y,ax, ay, mbt)
 		if self.mousepressed then self:mousepressed(x,y, ax, ay, mbt)end
 		for _,child in ipairs(self.children) do
-					print(child.abs_x, child.abs_y)
 				child:ux_mousepressed(x-child.abs_x,y-child.abs_y, ax, ay, mbt)
 		end
 	end

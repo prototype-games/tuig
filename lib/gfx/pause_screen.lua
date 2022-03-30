@@ -18,7 +18,6 @@ local pause_screen = function(name,x,y,w,h,xx,yy,fun)
 		if self.mousepressed then self:mousepressed(x,y, ax, ay, mbt)end
 		for _,child in ipairs(self.children) do
 			if child ~= vp.UX then
-				print(child.abs_x, child.abs_y)
 				child:ux_mousepressed(x-child.abs_x,y-child.abs_y, ax, ay, mbt)
 			end
 		end

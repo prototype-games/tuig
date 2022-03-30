@@ -62,7 +62,6 @@ function love.keypressed(key, scancode, is_repeat)
 		-- pause_button()
 		local scene = AFW:get(scn())
 		for named, director in pairs(scene.directors) do
-			-- print(named)
 			if director.keypressed then
 				director:keypressed(scene, AFW, key, scancode, is_repeat)
 			end
