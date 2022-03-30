@@ -24,8 +24,7 @@ function scn()
 	return AFW:get_by_actor_name("player").scene.name
 end
 function love.load()
-	UX = lib.gfx.ux_elem("UX",0,0,800,600)
-	
+	UX = lib.gfx.ux("UX",800,600, love.graphics.getWidth(), love.graphics.getHeight())
 	UX.is_controller=true
 
 	-- imports
@@ -68,9 +67,11 @@ function love.keypressed(key, scancode, is_repeat)
 				director:keypressed(scene, AFW, key, scancode, is_repeat)
 			end
 		end
-		
 end
 
 function love.mousepressed(x,y,mbt)
 	UX:ux_mousepressed(x,y,x,y,mbt)
+end
+function love.resize(w,h)
+	UX:resize(w,h)
 end
